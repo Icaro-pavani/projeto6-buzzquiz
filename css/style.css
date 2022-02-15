@@ -1,3 +1,4 @@
+/* cores e formato padrão dos itens da página */
 * {
     box-sizing: border-box;
     --color-title: #fff;
@@ -7,14 +8,17 @@
     --backgroundcolor-body: #fafafa;
 }
 
+/* fonte padrão da página */
 html {
     font-family: 'Roboto', sans-serif;
 }
 
+/* cor de fundo da página */
 body {
     background-color: var(--backgroundcolor-body);
 }
 
+/* layout da barra do topo */
 header {
     position: fixed;
     top: 0;
@@ -36,12 +40,14 @@ header h1 {
     font-weight: 700;
 }
 
+/* layout dos quizzes */
 main {
     margin-top: 100px;
     width: 340px;
     margin: 100px auto 0;
 }
 
+/* layout criar quiz sem nenhum quiz criado anteriormente */
 .criar-quiz {
     width: 100%;
     height: 180px;
@@ -71,6 +77,7 @@ section.criar-quiz button {
     border-radius: 50px;
 }
 
+/* layout dos outros quizzes */
 h2 {
     color: var(--color-subbtitle);
     font-size: 20px;
@@ -122,6 +129,7 @@ li .cover {
     margin-bottom: 7px;
 }
 
+/* layout depois de ter quizzes criado */
 .topo-seus-quizes {
     display: flex;
     justify-content: space-between;
@@ -139,6 +147,7 @@ li .cover {
     color: var(--background--color-title);
 }
 
+/* layout do quizz selecionado */
 .corpo-quizz {
     width: 100%;
     margin-top: 69px;
