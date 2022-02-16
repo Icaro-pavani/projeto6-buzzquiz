@@ -103,6 +103,7 @@ li.quizz img {
     border-radius: 5px;
 }
 
+.fim-criacao .cover,
 li .cover {
     /* background-color: black; */
     background-image: linear-gradient(to bottom, transparent , #000000);
@@ -315,12 +316,14 @@ li .cover {
     font-weight: 700;
 }
 
-.botoes-fim-quizz {
+.botoes-fim-quizz,
+.botoes-fim-criacao-quizz {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.acessar-quizz,
 .reiniciar-quizz {
     width: 220px;
     height: 44px;
@@ -332,8 +335,10 @@ li .cover {
     margin-top: 6px;
     margin-bottom: 8px;
     border: none;
+    font-family: 'Roboto', sans-serif;
 }
 
+.home-fim,
 .home {
     width: 220px;
     height: 44px;
@@ -343,16 +348,22 @@ li .cover {
     font-size: 18px;
     line-height: 21px;
     margin-bottom: 66px;
+    font-family: 'Roboto', sans-serif;
 }
 
-.inicio-criacao {
+.inicio-criacao,
+.criacao-perguntas,
+.criacao-niveis {
     margin-top: 106px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.inicio-criacao h2 {
+.fim-criacao h2,
+.inicio-criacao h2,
+.criacao-perguntas h2,
+.criacao-niveis h2 {
     font-size: 20px;
     line-height: 23px;
     font-weight: 700;
@@ -366,34 +377,48 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #fff;
+    margin-bottom: 61px;
 }
 
-.perguntas-iniciais {
+form input {
+    font-family: 'Roboto', sans-serif;
+}
+
+.informacao-quizz,
+.cria-pergunta,
+.cria-nivel {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     justify-content: center;
-    background-color: #fff;
+    /* background-color: #fff; */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
     padding-top: 21px;
     padding-bottom: 18px;
     margin-bottom: 29px;
 }
 
-.perguntas-iniciais input {
+.informacao-quizz input,
+.cria-pergunta input,
+.cria-nivel input {
     height: 46px;
     width: 90%;
     margin: 0 18px 9px;
     font-size: 19px;
     line-height: 22px;
+    font-weight: 400;
     font-style: italic;
     border: 1px solid #d1d1d1;
     border-radius: 5px;
     padding-left: 18px;
+    font-family: 'Roboto', sans-serif;
 }
 
-.prosseguir-perguntas {
+.prosseguir-perguntas,
+.prosseguir-niveis,
+.prosseguir-finalizar {
     width: 324px;
     height: 54px;
     color: #fff5f4;
@@ -402,6 +427,73 @@ form {
     border-radius: 15px;
     font-size: 18px;
     line-height: 21px;
+}
+
+.topo-form {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    margin: 0 auto 12px;
+}
+
+.topo-form h2{
+    margin: 0;
+}
+
+.cria-pergunta h3 {
+    width: 90%;
+    font-size: 20px;
+    line-height: 23px;
+    font-weight: 700;
+    text-align: left;
+    margin: 28px auto 24px;
+}
+
+.cria-pergunta h4 {
+    width: 90%;
+    font-size: 20px;
+    line-height: 23px;
+    font-weight: 700;
+    text-align: left;
+    margin: 28px auto 14px;
+}
+
+.cria-nivel textarea {
+    height: 177px;
+    width: 90%;
+    margin: 0 18px 9px;
+    font-size: 19px;
+    line-height: 22px;
+    font-weight: 400;
+    font-style: italic;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+    padding-left: 18px;
+    padding-top: 13px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.fim-criacao {
+    margin-top: 106px;
+}
+
+.fim-criacao .quizz {
+    width: 90%;
+    height: 181px;
+    position: relative;
+    border-radius: 5px;
+    /* background-image: linear-gradient(to bottom, transparent , #000000), url('http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg'); */
+    background-size: cover;
+    margin: 0 auto 24px;
+    overflow: hidden;
+}
+
+.fim-criacao .quizz img {
+    width: 100%;
+    /* height: 181px; */
+    border-radius: 5px;
 }
 
 ::placeholder {
