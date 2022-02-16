@@ -94,11 +94,12 @@ li.quizz {
     /* background-image: linear-gradient(to bottom, transparent , #000000), url('http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg'); */
     background-size: cover;
     margin-bottom: 14px;
+    overflow: hidden;
 }
 
 li.quizz img {
     width: 100%;
-    height: 181px;
+    /* height: 181px; */
     border-radius: 5px;
 }
 
@@ -155,13 +156,16 @@ li .cover {
 
 .quiz-titulo {
     position: relative;
+    width: 100%;
+    height: 142px;
+    overflow: hidden;
     /* background-image: linear-gradient(to bottom, transparent , #000000), url('http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg'); */
-
+    /* background-size: cover; */
 }
 
 .corpo-quizz img {
     width: 100%;
-    height: 142px;
+    /* height: 142px; */
 }
 
 .corpo-quizz .cover {
@@ -194,10 +198,18 @@ li .cover {
 }
 
 .questoes {
-    background-color: #fff;
-    padding-top: 18px;
+    /* background-color: red; */
+    /* padding-top: 18px; */
     height: auto;
     margin-top: 24px;
+}
+
+.pergunta1,
+.pergunta2,
+.compilado {
+    background-color: #fff;
+    padding-top: 18px;
+    margin-bottom: 28px;
 }
 
 .pergunta1 h3,
@@ -238,13 +250,24 @@ li .cover {
 }
 
 .resposta {
-    max-width: 163px;
+    width: 163px;
+    overflow: hidden;
     /* height: 113px; */
 }
 
+.imagem-resposta {
+    width: 100%;
+    height: 113px;
+    overflow: hidden;
+    /* background-image: url('http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg'); */
+    /* background-size: cover; */
+    margin-bottom: 5px;
+}
+
+
 .resposta img {
     width: 163px;
-    height: 113px;
+    /* height: 113px; */
     margin-bottom: 5px;
 }
 
@@ -254,6 +277,72 @@ li .cover {
     line-height: 15px;
     font-weight: 700;
     margin-bottom: 12px;
+}
+
+.compilado {
+    background-color: #fff;
+    padding-bottom: 20px;
+}
+
+.compilado h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EC362D;
+    color: #fff;
+    width: 340px;
+    height: 89px;
+    margin: 0 auto 9px;
+    text-align: center;
+    font-size: 19px;
+    line-height: 22px;
+    font-weight: 700;
+}
+
+.mensagem {
+    width: 340px;
+    margin: 0 auto;
+}
+
+.mensagem img {
+    width: 340px;
+    margin-bottom: 9px;
+}
+
+.mensagem p {
+    font-size: 17px;
+    line-height: 20px;
+    font-weight: 700;
+}
+
+.botoes-fim-quizz {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reiniciar-quizz {
+    width: 220px;
+    height: 44px;
+    color: #fff;
+    background-color: var(--background--color-title);
+    border-radius: 15px;
+    font-size: 18px;
+    line-height: 21px;
+    margin-top: 6px;
+    margin-bottom: 8px;
+    border: none;
+}
+
+.home {
+    width: 220px;
+    height: 44px;
+    background-color: transparent;
+    color: #818181;
+    border: none;
+    font-size: 18px;
+    line-height: 21px;
+    margin-bottom: 66px;
 }
 
 .escondido {
