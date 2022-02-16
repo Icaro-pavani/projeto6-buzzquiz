@@ -361,6 +361,13 @@ li .cover {
     margin-bottom: 29px;
 }
 
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .perguntas-iniciais {
     width: 100%;
     display: flex;

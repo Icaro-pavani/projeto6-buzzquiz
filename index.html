@@ -158,13 +158,19 @@
 
     <section class="inicio-criacao">
         <h2>Comece pelo começo</h2>
-        <div class="perguntas-iniciais">
-            <input type="text" class="nome-titulo" placeholder="Título de seu quizz">
-            <input type="text" class="url" placeholder="URL da imagem do seu quizz">
-            <input type="text" class="quantidade-perguntas" placeholder="Quantidade de perguntas do quizz">
-            <input type="text" class="quantidade-niveis" placeholder="Quantidade de níveis do quizz">
-        </div>
-        <button class="prosseguir-perguntas">Prosseguir para criar perguntas</button>
+        <form>
+            <div class="perguntas-iniciais">
+                <input type="text" class="nome-titulo" minlength="3" maxlength="10" placeholder="Título de seu quizz" required>
+                <input type="text" class="url" placeholder="URL da imagem do seu quizz">
+                <input type="text" class="quantidade-perguntas" placeholder="Quantidade de perguntas do quizz">
+                <input type="text" class="quantidade-niveis" placeholder="Quantidade de níveis do quizz">
+            </div>
+            <input type="submit" class="prosseguir-perguntas" value="Prosseguir para criar perguntas">
+        </form>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script/script.js"></script>
+    <script src="script/criarQuizScript.js"></script>
 </body>
 </html>
