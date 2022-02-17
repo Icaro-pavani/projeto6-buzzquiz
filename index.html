@@ -18,13 +18,13 @@
         <h1>BuzzQuizz</h1>
     </header>
 
-    <main class="escondido">
+    <main class="">
         <section class="criar-quiz">
             <p>Você não criou nenhum quizz ainda :(</p>
             <button>Criar Quizz</button>
         </section>
 
-        <ul class="seus-quizzes">
+        <ul class="seus-quizzes escondido">
             <div class="topo-seus-quizes">
                 <h2>Seus Quizzes</h2>
                 <ion-icon name="add-circle-sharp"></ion-icon>
@@ -160,12 +160,12 @@
         <h2>Comece pelo começo</h2>
         <form>
             <div class="informacao-quizz">
-                <input type="text" class="nome-titulo" minlength="20" maxlength="65" placeholder="Título de seu quizz" required>
-                <input type="text" class="url" placeholder="URL da imagem do seu quizz" required>
-                <input type="number" class="quantidade-perguntas" min="3" placeholder="Quantidade de perguntas do quizz" required>
-                <input type="number" class="quantidade-niveis" min="2" placeholder="Quantidade de níveis do quizz" required>
+                <input type="text" class="nome-titulo" name="nome-titulo" minlength="20" maxlength="65" placeholder="Título de seu quizz" oninvalid="invalidMsg(this);" oninput="invalidMsg(this);" required>
+                <input type="url" class="url" name="url" placeholder="URL da imagem do seu quizz" required>
+                <input type="number" class="quantidade-perguntas" name="quantidade-perguntas" min="3" placeholder="Quantidade de perguntas do quizz" required>
+                <input type="number" class="quantidade-niveis" name="quantidade-niveis" min="2" placeholder="Quantidade de níveis do quizz" required>
             </div>
-            <input type="submit" class="prosseguir-perguntas" value="Prosseguir para criar perguntas">
+            <input type="submit" class="prosseguir-perguntas" name="prosseguir-perguntas" value="Prosseguir para criar perguntas">
         </form>
     </section>
 
@@ -289,7 +289,7 @@
         </form>
     </section>
 
-    <section class="fim-criacao">
+    <section class="fim-criacao escondido">
         <h2>Seu quizz está pronto!</h2>
         <div class="quizz">
             <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">

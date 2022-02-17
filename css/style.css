@@ -496,8 +496,17 @@ form input {
     border-radius: 5px;
 }
 
+input.url-resposta-incorreta {
+    margin: 0 18px 29px;
+}
+
+
 ::placeholder {
     color: #bababa;
+}
+
+input:focus {
+    outline: none;
 }
 
 .escondido {
