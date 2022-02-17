@@ -95,6 +95,7 @@ li.quizz {
     background-size: cover;
     margin-bottom: 14px;
     overflow: hidden;
+    cursor:pointer;
 }
 
 li.quizz img {
@@ -204,16 +205,14 @@ li .cover {
     margin-top: 24px;
 }
 
-.pergunta1,
-.pergunta2,
+.pergunta,
 .compilado {
     background-color: #fff;
     padding-top: 18px;
     margin-bottom: 28px;
 }
 
-.pergunta1 h3,
-.pergunta2 h3 {
+.pergunta h3{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -228,17 +227,14 @@ li .cover {
     font-weight: 700;
 }
 
-.pergunta2 h3 {
-    background-color: #A0438D;
-}
 
 .questoes span {
     margin: 0 4%;
 }
 
-.pergunta {
+/*.pergunta {
     width: 340px;
-}
+}*/
 
 .respostas {
     display: flex;

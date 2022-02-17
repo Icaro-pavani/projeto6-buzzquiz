@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,27 +10,31 @@
     <link rel="stylesheet" href="css/style.css" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
     <!-- Console dos browsers indicaram que adicionar aqui melhoraria a eficiência -->
     <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
+
 <body>
+    <!--Cabeçalho-->
     <header>
         <h1>BuzzQuizz</h1>
     </header>
 
-    <main class="escondido">
+    <main class="">
+        <!--Criar Quizz-->
         <section class="criar-quiz">
             <p>Você não criou nenhum quizz ainda :(</p>
             <button>Criar Quizz</button>
         </section>
 
-        <ul class="seus-quizzes">
-            <div class="topo-seus-quizes">
-                <h2>Seus Quizzes</h2>
-                <ion-icon name="add-circle-sharp"></ion-icon>
-            </div>
-
+        <!--Seus Quizzes-->
+        <div class="topo-seus-quizes">
+            <h2>Seus Quizzes</h2>
+            <ion-icon name="add-circle-sharp"></ion-icon>
+        </div>
+        <ul class="seus-quizzes escondido">
             <li class="quizz">
                 <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
                 <div class="cover"></div>
@@ -43,112 +48,32 @@
             </li>
         </ul>
 
+        <!--Todos os quizzes-->
+        <h2>Todos os Quizzes</h2>
         <ul class="quizzes">
-            <h2>Todos os Quizzes</h2>
-            <li class="quizz">
-                <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-                <div class="cover"></div>
-                <p>Acerte as localizações dos castelos</p>
-            </li>
-
-            <li class="quizz">
-                <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-                <div class="cover"></div>
-                <p>PotterHead</p>
-            </li>
         </ul>
     </main>
 
+    <!--Quizz Individual-->
     <article class="corpo-quizz escondido">
+
+        <!--Título do Quizz-->
         <section class="quiz-titulo">
-            <div class="cover"></div>
-            <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-            <p class="titulo">PotterHead</p>
-        </section>
+        </section> 
 
+        <!--Todas as questões-->
         <section class="questoes">
-            <div class="pergunta1">
-                <h3><span>Em qual animal Olho-Tonto Moody transfigurou Malfoy?</span></h3>
-                <ul class="respostas">
-                    <li class="resposta">
-                        <div class="imagem-resposta">
-                            <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-                        </div>
-                        <div class="cobertura"></div>
-                        <p class="texto-resposta">Gato</p>
-                    </li>
-    
-                    <li class="resposta">
-                        <div class="imagem-resposta">
-                            <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-                        </div>
-                        <div class="cobertura"></div>
-                        <p class="texto-resposta">Gato</p>
-                    </li>
-    
-                    <li class="resposta">
-                        <div class="imagem-resposta">
-                            <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-                        </div>
-                        <div class="cobertura"></div>
-                        <p class="texto-resposta">Gato</p>
-                    </li>
-    
-                    <li class="resposta">
-                        <div class="imagem-resposta">
-                            <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-                        </div>
-                        <div class="cobertura"></div>
-                        <p class="texto-resposta">Gato</p>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="pergunta2">
-                <h3><span>Em qual animal Olho-Tonto Moody transfigurou Malfoy?</span></h3>
-                <ul class="respostas">
-                    <li class="resposta">
-                        <div class="imagem-resposta">
-                            <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-                        </div>
-                        <div class="cobertura"></div>
-                        <p class="texto-resposta">Gato</p>
-                    </li>
-    
-                    <li class="resposta">
-                        <div class="imagem-resposta">
-                            <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-                        </div>
-                        <div class="cobertura"></div>
-                        <p class="texto-resposta">Gato</p>
-                    </li>
-    
-                    <li class="resposta">
-                        <div class="imagem-resposta">
-                            <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-                        </div>
-                        <div class="cobertura"></div>
-                        <p class="texto-resposta">Gato</p>
-                    </li>
-    
-                    <li class="resposta">
-                        <div class="imagem-resposta">
-                            <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
-                        </div>
-                        <div class="cobertura"></div>
-                        <p class="texto-resposta">Gato</p>
-                    </li>
-                </ul>
+            <div class="corpo-quizz__perguntas">
             </div>
 
             <div class="compilado">
-                <h3><span>88% de acerto: Você é praticamente um aluno de Hogwarts!</span></h3>
+                <!--<h3><span>88% de acerto: Você é praticamente um aluno de Hogwarts!</span></h3>
                 <div class="mensagem">
                     <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="">
                     <p>Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.</p>
-                </div>
+                </div> -->
             </div>
-            
+
             <div class="botoes-fim-quizz">
                 <button class="reiniciar-quizz">Reiniciar Quizz</button>
                 <button class="home">Voltar para home</button>
@@ -156,7 +81,7 @@
         </section>
     </article>
 
-    <section class="inicio-criacao">
+    <section class="inicio-criacao escondido">
         <h2>Comece pelo começo</h2>
         <div class="perguntas-iniciais">
             <input type="text" class="nome-titulo" placeholder="Título de seu quizz">
@@ -166,5 +91,13 @@
         </div>
         <button class="prosseguir-perguntas">Prosseguir para criar perguntas</button>
     </section>
+
+
+    <!--Axios-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!--Scripts-->
+    <script src="script/script.js"></script>
+
 </body>
+
 </html>
