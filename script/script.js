@@ -61,7 +61,7 @@ function mostrarTelaDoQuizz(){
 
 // Carrega o quizz na tela após usuário decidir jogá-lo
 function carregarQuizz(quizz) {
-    console.log(quizz);
+    
     const titulo = quizz.title;
     const imagem = quizz.image;
     const questoes = quizz.questions;
@@ -82,12 +82,14 @@ function carregarTituloDoQuizz(titulo, imagem) {
 }
 
 function carregarQuestao(questao){
-    console.log(questao);
     
     const titulo = questao.title;
     const cor = questao.color;
     const respostas = questao.answers;
 
+    // Embaralha as respostas
+    respostas.sort(comparador);
+    
     // Cria a pergunta no HTML
     divPerguntasdoQuizzSelecionado.innerHTML += `
     <div class="pergunta">
@@ -122,6 +124,11 @@ function carregarQuestao(questao){
     }
 }
 
+/* --- Funções Auxiliares --- */
+// Comparador: gera um número randômico entre -0.5 e 0.5
+function comparador() { 
+    return Math.random() - 0.5; 
+}
 
 /* --- Inicialização --- */
 obterTodosOsQuizzes();
