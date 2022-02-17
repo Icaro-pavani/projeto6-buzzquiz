@@ -1,6 +1,8 @@
 /* --- Variáveis Globais --- */
 const ENDERECO_QUIZZES = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 
+let respostasDoQuizz = [];
+let indicePergunta = 0;
 
 const ulQuizzes = document.querySelector(".quizzes");
 const divPerguntasdoQuizzSelecionado = document.querySelector(".corpo-quizz__perguntas");
@@ -54,14 +56,14 @@ function esconderElementosDaTelaInicial() {
 }
 
 // Mostra a tela em que o quizz escolhido é carregado
-function mostrarTelaDoQuizz(){
+function mostrarTelaDoQuizz() {
     const telaQuizz = document.querySelector(".corpo-quizz");
     telaQuizz.classList.remove("escondido");
 }
 
 // Carrega o quizz na tela após usuário decidir jogá-lo
 function carregarQuizz(quizz) {
-    
+
     const titulo = quizz.title;
     const imagem = quizz.image;
     const questoes = quizz.questions;
@@ -81,15 +83,20 @@ function carregarTituloDoQuizz(titulo, imagem) {
     quizzTitulo.scrollIntoView();
 }
 
-function carregarQuestao(questao){
-    
+// Carrega cada questão do quizz na tela
+// É responsável por compôr todo o HTML de cada questão
+function carregarQuestao(questao) {
+
     const titulo = questao.title;
     const cor = questao.color;
     const respostas = questao.answers;
 
     // Embaralha as respostas
     respostas.sort(comparador);
-    
+
+    // Adiciona a respota a variável global
+    respostasDoQuizz.push(respostas);
+
     // Cria a pergunta no HTML
     divPerguntasdoQuizzSelecionado.innerHTML += `
     <div class="pergunta">
@@ -107,13 +114,13 @@ function carregarQuestao(questao){
     h3TituloPergunta.style.backgroundColor = cor;
 
     // Recupera a lista ul da ultima pergunta adicionada
-    const ultimaListaDeQuestoes =  ultimaPergunta.querySelector("ul");
+    const ultimaListaDeQuestoes = ultimaPergunta.querySelector("ul");
 
     // Adicionada cada alternativa da pergunta
     for (let i = 0; i < respostas.length; i++) {
         let resposta = respostas[i];
         ultimaListaDeQuestoes.innerHTML += `
-        <li class="resposta">
+        <li class="resposta" onClick="selecionarResposta(this, ${indicePergunta}, ${i})">
             <div class="imagem-resposta">
                 <img src="${resposta.image}" alt="${resposta.image}">
             </div>
@@ -122,12 +129,40 @@ function carregarQuestao(questao){
         </li>
         `
     }
+
+    // Incrementa o número de respostas carregadas
+    indicePergunta += 1;
+}
+
+function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta) {
+    const ulRespostas = liRespostaEscolhida.parentNode;
+    const todasAsRespostas = [...ulRespostas.querySelectorAll("li")];
+    const divPergunta = ulRespostas.parentNode;
+
+    if (!divPergunta.classList.contains("pergunta-respondida")) {
+        divPergunta.classList.add("pergunta-respondida");
+        // Marca a resposta escolhida
+        liRespostaEscolhida.classList.add("resposta-escolhida");
+
+        // Para cada resposta verifica se é a escolhida
+        todasAsRespostas.forEach(verificarRespostaEscolhida);
+    }
+    
+
+    const respostaSelecionada = respostasDoQuizz[indicePergunta][indiceResposta];
+}
+
+// Adiciona as resposta não escolhida uma opacidade menor (classe respota-nao-escolhida)
+function verificarRespostaEscolhida(liResposta) {
+    if (!liResposta.classList.contains("resposta-escolhida")) {
+        liResposta.classList.add("resposta-nao-escolhida");
+    }
 }
 
 /* --- Funções Auxiliares --- */
 // Comparador: gera um número randômico entre -0.5 e 0.5
-function comparador() { 
-    return Math.random() - 0.5; 
+function comparador() {
+    return Math.random() - 0.5;
 }
 
 /* --- Inicialização --- */

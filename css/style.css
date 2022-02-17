@@ -276,6 +276,10 @@ li .cover {
     margin-bottom: 12px;
 }
 
+.resposta-nao-escolhida {
+    opacity: 0.3;
+}
+
 .compilado {
     background-color: #fff;
     padding-bottom: 20px;
