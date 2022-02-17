@@ -1,10 +1,12 @@
 const criarQuizzButton = document.querySelector(".criar-quiz button");
+const criarQuizzIcon = document.querySelector(".seus-quizzes ion-icon");
 const formInicioCriacaoQuizz = document.querySelector(".inicio-criacao form");
 let formCriacaoPerguntas = null;
 const prosseguirParaPerguntasButton = document.querySelector(".prosseguir-perguntas");
 let prosseguirParaNiveisButton = null;
 
 let infoBasicas = {};
+let perguntasCriadas = [];
 
 const iniciarCriarQuizz = event => {
     document.querySelector("main").classList.add("escondido");
@@ -12,6 +14,7 @@ const iniciarCriarQuizz = event => {
 }
 
 criarQuizzButton.addEventListener("click", iniciarCriarQuizz);
+criarQuizzIcon.addEventListener("click", iniciarCriarQuizz);
 
 formInicioCriacaoQuizz.addEventListener("submit", event => {
     event.preventDefault();
@@ -111,7 +114,7 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
 function configurarButtonProsseguirParaNiveis(button) {
     button.addEventListener("click", () => {
         const listaInputRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".url-resposta-incorreta");
-        console.log(listaInputRespostasIncorretas);
+        // console.log(listaInputRespostasIncorretas);
         for (let i = 0; i < listaInputRespostasIncorretas.length; i++) {
             if (listaInputRespostasIncorretas[i].value) {
                 console.log(listaInputRespostasIncorretas[i]);
@@ -119,7 +122,7 @@ function configurarButtonProsseguirParaNiveis(button) {
             }
         }
         const listaInputsInvalidos = formCriacaoPerguntas.querySelectorAll(":invalid");
-        console.log(listaInputsInvalidos);
+        // console.log(listaInputsInvalidos);
         if (listaInputsInvalidos.length !== 0) {
             alert("Preencha os dados corretamente");
         }
@@ -127,5 +130,40 @@ function configurarButtonProsseguirParaNiveis(button) {
 
     formCriacaoPerguntas.addEventListener("submit", event => {
         event.preventDefault();
+        armazenarInformacoesPerguntas();
     })    
+}
+
+function armazenarInformacoesPerguntas() {
+    const perguntas = document.querySelectorAll(".campo-form-pergunta");
+    let elementoRespostas = null;
+    let respostas = [];
+    let infoPerguntaTemporario = {};
+
+    for (pergunta of perguntas) {
+        infoPerguntaTemporario.title = pergunta.querySelector(".texto-pergunta").value;
+        infoPerguntaTemporario.color = pergunta.querySelector(".cor-fundo").value;
+        respostas.push({
+            text: pergunta.querySelector(".resposta-correta").value,
+            image: pergunta.querySelector(".url-resposta-correta").value,
+            isCorrectAnswer: true
+        });
+        elementosRespostasIncorretas = pergunta.querySelectorAll(".resposta-incorreta");
+        for (resposta of elementosRespostasIncorretas) {
+            if (resposta.value) {
+                respostas.push({
+                    text: resposta.value,
+                    image: resposta.nextElementSibling.value,
+                    isCorrectAnswer: false
+                });
+            }
+        }
+        infoPerguntaTemporario.answer = respostas;
+        respostas = [];
+        perguntasCriadas.push({
+            title: infoPerguntaTemporario.title,
+            color: infoPerguntaTemporario.color,
+            answer: infoPerguntaTemporario.answer
+        });
+    }
 }
