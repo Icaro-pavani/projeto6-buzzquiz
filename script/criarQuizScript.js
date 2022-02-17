@@ -1,6 +1,8 @@
 const criarQuizzButton = document.querySelector(".criar-quiz button");
 const formInicioCriacaoQuizz = document.querySelector(".inicio-criacao form");
+let formCriacaoPerguntas = null;
 const prosseguirParaPerguntasButton = document.querySelector(".prosseguir-perguntas");
+let prosseguirParaNiveisButton = null;
 
 let infoBasicas = {};
 
@@ -40,7 +42,7 @@ function invalidMsg(element) {
 }
 
 function abrirEdicaoPerguntas(qtdPerguntas) {
-    const formCriacaoPerguntas = document.querySelector(".criacao-perguntas form");
+    formCriacaoPerguntas = document.querySelector(".criacao-perguntas form");
     formCriacaoPerguntas.innerHTML = `
         <div class="cria-pergunta">
             <div class="topo-form">
@@ -50,7 +52,7 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
             <div class="campo-form-pergunta">
                 <div class="definicao-pergunta">
                     <input type="text" class="texto-pergunta" name="texto-pergunta" minlength="20" placeholder="Texto da pergunta" required>
-                    <input type="text" class="cor-fundo" name="cor-fundo" placeholder="Cor de fundo da pergunta" required>
+                    <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" placeholder="Cor de fundo da pergunta" required>
                 </div>
                 <h3>Resposta correta</h3>
                 <input type="text" class="resposta-correta" name="resposta-correta" placeholder="Resposta correta" required>
@@ -75,7 +77,7 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
                 <div class="campo-form-pergunta escondido">
                     <div class="definicao-pergunta">
                         <input type="text" class="texto-pergunta" name="texto-pergunta" minlength="20" placeholder="Texto da pergunta" required>
-                        <input type="text" class="cor-fundo" name="cor-fundo" placeholder="Cor de fundo da pergunta" required>
+                        <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" placeholder="Cor de fundo da pergunta" required>
                     </div>
                     <h3>Resposta correta</h3>
                     <input type="text" class="resposta-correta" name="resposta-correta" placeholder="Resposta correta" required>
@@ -101,4 +103,29 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
             this.classList.add("escondido");
         })
     }
+
+    prosseguirParaNiveisButton = document.querySelector(".prosseguir-niveis");
+    configurarButtonProsseguirParaNiveis(prosseguirParaNiveisButton);
+}
+
+function configurarButtonProsseguirParaNiveis(button) {
+    button.addEventListener("click", () => {
+        const listaInputRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".url-resposta-incorreta");
+        console.log(listaInputRespostasIncorretas);
+        for (let i = 0; i < listaInputRespostasIncorretas.length; i++) {
+            if (listaInputRespostasIncorretas[i].value) {
+                console.log(listaInputRespostasIncorretas[i]);
+                listaInputRespostasIncorretas[i].previousElementSibling.setAttribute("required", "");
+            }
+        }
+        const listaInputsInvalidos = formCriacaoPerguntas.querySelectorAll(":invalid");
+        console.log(listaInputsInvalidos);
+        if (listaInputsInvalidos.length !== 0) {
+            alert("Preencha os dados corretamente");
+        }
+    });
+
+    formCriacaoPerguntas.addEventListener("submit", event => {
+        event.preventDefault();
+    })    
 }
