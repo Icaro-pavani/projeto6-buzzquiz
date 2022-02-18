@@ -1,6 +1,8 @@
 /* --- Variáveis Globais --- */
 const ENDERECO_QUIZZES = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 
+let respostasDoQuizz = [];
+let indicePergunta = 0;
 
 const ulQuizzes = document.querySelector(".quizzes");
 const divPerguntasdoQuizzSelecionado = document.querySelector(".corpo-quizz__perguntas");
@@ -54,14 +56,14 @@ function esconderElementosDaTelaInicial() {
 }
 
 // Mostra a tela em que o quizz escolhido é carregado
-function mostrarTelaDoQuizz(){
+function mostrarTelaDoQuizz() {
     const telaQuizz = document.querySelector(".corpo-quizz");
     telaQuizz.classList.remove("escondido");
 }
 
 // Carrega o quizz na tela após usuário decidir jogá-lo
 function carregarQuizz(quizz) {
-    console.log(quizz);
+
     const titulo = quizz.title;
     const imagem = quizz.image;
     const questoes = quizz.questions;
@@ -81,47 +83,120 @@ function carregarTituloDoQuizz(titulo, imagem) {
     quizzTitulo.scrollIntoView();
 }
 
-function carregarQuestao(questao){
-    console.log(questao);
-    
+// Carrega cada questão do quizz na tela
+// É responsável por compôr todo o HTML de cada questão
+function carregarQuestao(questao) {
+
     const titulo = questao.title;
     const cor = questao.color;
     const respostas = questao.answers;
 
+    // Embaralha as respostas
+    respostas.sort(comparador);
+
+    // Adiciona a respota a variável global
+    respostasDoQuizz.push(respostas);
+
     // Cria a pergunta no HTML
     divPerguntasdoQuizzSelecionado.innerHTML += `
     <div class="pergunta">
-        <h3><span>${titulo}</span></h3>
+    <h3><span>${titulo}</span></h3>
         <ul class="respostas">
         </ul>
         </div>
-    `;
+        `;
 
     // Recupera a ultima pergunta adicionada
     const ultimaPergunta = divPerguntasdoQuizzSelecionado.querySelector(".pergunta:last-child");
-
+    
     // Recupera o h3 da ultima pergunta adicionada e altera a sua cor
     const h3TituloPergunta = ultimaPergunta.querySelector("h3");
     h3TituloPergunta.style.backgroundColor = cor;
 
     // Recupera a lista ul da ultima pergunta adicionada
-    const ultimaListaDeQuestoes =  ultimaPergunta.querySelector("ul");
+    const ultimaListaDeQuestoes = ultimaPergunta.querySelector("ul");
 
     // Adicionada cada alternativa da pergunta
     for (let i = 0; i < respostas.length; i++) {
         let resposta = respostas[i];
         ultimaListaDeQuestoes.innerHTML += `
-        <li class="resposta">
-            <div class="imagem-resposta">
+        <li class="resposta" onClick="selecionarResposta(this, ${indicePergunta}, ${i})">
+        <div class="imagem-resposta">
                 <img src="${resposta.image}" alt="${resposta.image}">
             </div>
             <div class="cobertura"></div>
             <p class="texto-resposta">${resposta.text}</p>
-        </li>
-        `
+            </li>
+            `
+    }
+
+    // Incrementa o número de respostas carregadas
+    indicePergunta += 1;
+}
+
+// Define o comportamento da seleção de uma resposta
+function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta) {
+const ulRespostas = liRespostaEscolhida.parentNode;
+    const liTodasAsRespostas = [...ulRespostas.querySelectorAll("li")];
+    const divPergunta = ulRespostas.parentNode;
+    const proximaPergunta = divPergunta.nextElementSibling;
+
+    // Verifica se a pergunta já foi respondida
+    if (!divPergunta.classList.contains("pergunta-respondida")) {
+        divPergunta.classList.add("pergunta-respondida");
+        // Marca a resposta escolhida
+        liRespostaEscolhida.classList.add("resposta-escolhida");
+
+        // Para cada resposta verifica se é a escolhida
+        liTodasAsRespostas.forEach(verificarRespostaEscolhida);
+
+        // Altera a cor das respostas
+        alterarCorDasRespostas(respostasDoQuizz[indicePergunta], liTodasAsRespostas);
+    }
+
+    // scroll para a proxima pergunta
+    if (proximaPergunta != null) {
+        setTimeout(() => {
+            proximaPergunta.scrollIntoView()
+        }, 2000);
+    }
+    else {
+        console.log("Não há mais perguntas!!");
+    }
+    //const respostaSelecionada = respostasDoQuizz[indicePergunta][indiceResposta];
+}
+
+// Adiciona as resposta não escolhida uma opacidade menor (classe respota-nao-escolhida)
+function verificarRespostaEscolhida(liResposta) {
+    if (!liResposta.classList.contains("resposta-escolhida")) {
+        liResposta.classList.add("resposta-nao-escolhida");
     }
 }
 
+// Altera a cor da resposta para verde se ela é a correta, 
+// caso contrário altera para vermelho
+function alterarCorDasRespostas(respostas, liRespostas) {
+
+    for (let i = 0; i < respostas.length; i++) {
+        const respostaCorreta = respostas[i].isCorrectAnswer;
+        const textoResposta = liRespostas[i].querySelector(".texto-resposta");
+
+        if (respostaCorreta) {
+            textoResposta.style.color = "#009C22";
+        }
+        else {
+            textoResposta.style.color = "#FF0B0B";
+        }
+    }
+}
+
+
+
+/* --- Funções Auxiliares --- */
+// Comparador: gera um número randômico entre -0.5 e 0.5
+function comparador() {
+    return Math.random() - 0.5;
+}
 
 /* --- Inicialização --- */
 obterTodosOsQuizzes();
