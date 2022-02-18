@@ -347,8 +347,11 @@ function abrirTelaFimCriacao(resposta) {
         </div>
         <div class="botoes-fim-criacao-quizz">
             <button class="acessar-quizz" onclick="jogarQuizz(${objetoResposta.id});">Acessar Quizz</button>
-            <button class="home-fim">Voltar para home</button>
+            <button class="home-fim" onclick="refreshPage();">Voltar para home</button>
         </div>`;
     telaFimCriacao.classList.remove("escondido");
-       
+}
+
+function refreshPage() {
+    window.location.reload();
 }

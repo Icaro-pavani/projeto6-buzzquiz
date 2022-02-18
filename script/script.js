@@ -27,7 +27,7 @@ function renderizarQuizz(quizz) {
     const id = quizz.id;
     const title = quizz.title;
     const imagem = quizz.image;
-    
+
     ulQuizzes.innerHTML += `
     <li class="quizz" onclick="jogarQuizz(${id})">
         <img src="${imagem}" alt="${imagem}">
@@ -53,6 +53,7 @@ function jogarQuizz(id) {
 function esconderElementosDaTelaInicial() {
     const telaInicial = document.querySelector("main");
     telaInicial.classList.add("escondido");
+    document.querySelector(".fim-criacao").classList.add("escondido");
 }
 
 // Mostra a tela em que o quizz escolhido é carregado
