@@ -18,6 +18,11 @@ body {
     background-color: var(--backgroundcolor-body);
 }
 
+/* Cursor pointer nos botões */
+button:hover{
+    cursor: pointer;
+}
+
 /* layout da barra do topo */
 header {
     position: fixed;
@@ -251,6 +256,10 @@ li .cover {
     width: 163px;
     overflow: hidden;
     /* height: 113px; */
+}
+
+.resposta:hover {
+    cursor: pointer;
 }
 
 .imagem-resposta {

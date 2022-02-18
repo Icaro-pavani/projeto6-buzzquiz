@@ -3,9 +3,14 @@ const ENDERECO_QUIZZES = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizze
 
 let respostasDoQuizz = [];
 let indicePergunta = 0;
+let quizzLevels = [];
+let numeroDePerguntas = 0;
+let numeroDeAcertos = 0;
+let resultadoFinal = 0;
 
 const ulQuizzes = document.querySelector(".quizzes");
 const divPerguntasdoQuizzSelecionado = document.querySelector(".corpo-quizz__perguntas");
+const divCompilado = document.querySelector(".compilado");
 
 /* --- Conjunto de Funções --- */
 
@@ -69,6 +74,9 @@ function carregarQuizz(quizz) {
     const imagem = quizz.image;
     const questoes = quizz.questions;
 
+    quizzLevels = quizz.levels;
+    numeroDePerguntas = questoes.length;
+
     carregarTituloDoQuizz(titulo, imagem);
     questoes.forEach(carregarQuestao);
 }
@@ -109,7 +117,7 @@ function carregarQuestao(questao) {
 
     // Recupera a ultima pergunta adicionada
     const ultimaPergunta = divPerguntasdoQuizzSelecionado.querySelector(".pergunta:last-child");
-    
+
     // Recupera o h3 da ultima pergunta adicionada e altera a sua cor
     const h3TituloPergunta = ultimaPergunta.querySelector("h3");
     h3TituloPergunta.style.backgroundColor = cor;
@@ -137,7 +145,7 @@ function carregarQuestao(questao) {
 
 // Define o comportamento da seleção de uma resposta
 function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta) {
-const ulRespostas = liRespostaEscolhida.parentNode;
+    const ulRespostas = liRespostaEscolhida.parentNode;
     const liTodasAsRespostas = [...ulRespostas.querySelectorAll("li")];
     const divPergunta = ulRespostas.parentNode;
     const proximaPergunta = divPergunta.nextElementSibling;
@@ -155,16 +163,30 @@ const ulRespostas = liRespostaEscolhida.parentNode;
         alterarCorDasRespostas(respostasDoQuizz[indicePergunta], liTodasAsRespostas);
     }
 
+
     // scroll para a proxima pergunta
     if (proximaPergunta != null) {
         setTimeout(() => {
-            proximaPergunta.scrollIntoView()
+            proximaPergunta.querySelector('h3').scrollIntoView()
         }, 2000);
     }
     else {
         console.log("Não há mais perguntas!!");
     }
-    //const respostaSelecionada = respostasDoQuizz[indicePergunta][indiceResposta];
+
+    // Avalia se o resultado é correto ou não
+    const respostaSelecionada = respostasDoQuizz[indicePergunta][indiceResposta];
+    if (respostaSelecionada.isCorrectAnswer) {
+        numeroDeAcertos++;
+    }
+
+    // Calcula e renderiza o resultado final caso seja a última pergunta.
+    if (isUltimaPergunta(indicePergunta)) {
+        console.log("É a última pergunta!!");
+        resultadoFinal = Math.round((numeroDeAcertos / numeroDePerguntas)*100);
+        setTimeout(renderizarResultadoDoQuizz, 2000);
+    }
+
 }
 
 // Adiciona as resposta não escolhida uma opacidade menor (classe respota-nao-escolhida)
@@ -191,6 +213,49 @@ function alterarCorDasRespostas(respostas, liRespostas) {
     }
 }
 
+// Renderiza o HTML do resultado do quizz
+function renderizarResultadoDoQuizz() {
+    const level = levelFinal();
+
+    divCompilado.innerHTML = `
+    <h3><span>${resultadoFinal}% de acerto: ${level.title}</span></h3>
+    <div class="mensagem">
+        <img src="${level.image}" alt="${level.image}">
+        <p>${level.text}</p>
+    </div>
+    `;
+
+    divCompilado.classList.remove("escondido");
+    divCompilado.querySelector('h3').scrollIntoView();
+}
+
+// Retornal o level final obtido pelo usuário
+function levelFinal() {
+    let indiceMaiorLevel = 0;
+
+    for (let i = 0; i < quizzLevels.length; i++) {
+        if (resultadoFinal >= quizzLevels[i].minValue) {
+            indiceMaiorLevel = i;
+        }
+        else {
+            break;
+        }
+    }
+
+    const maiorLevel = quizzLevels[indiceMaiorLevel];
+
+    return maiorLevel;
+
+}
+
+// Avalia se é a ultima pergunta do quizz
+function isUltimaPergunta(indicePergunta) {
+    if ((indicePergunta + 1) === numeroDePerguntas) {
+        return true;
+    }
+
+    return false;
+}
 
 
 /* --- Funções Auxiliares --- */
