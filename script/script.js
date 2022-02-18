@@ -27,7 +27,7 @@ function renderizarQuizz(quizz) {
     const id = quizz.id;
     const title = quizz.title;
     const imagem = quizz.image;
-
+    
     ulQuizzes.innerHTML += `
     <li class="quizz" onclick="jogarQuizz(${id})">
         <img src="${imagem}" alt="${imagem}">

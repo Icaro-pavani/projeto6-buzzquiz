@@ -1,7 +1,7 @@
 const ENDERECO_POST_QUIZZES = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
 
 const criarQuizzButton = document.querySelector(".criar-quiz button");
-const criarQuizzIcon = document.querySelector(".seus-quizzes ion-icon");
+const criarQuizzIcon = document.querySelector(".topo-seus-quizes ion-icon");
 const formInicioCriacaoQuizz = document.querySelector(".inicio-criacao form");
 let formCriacaoPerguntas = null;
 let formCriacaoNiveis = null;
@@ -20,7 +20,7 @@ if (meusQuizzSerializado !== null){
     meusQuizzes = JSON.parse(meusQuizzSerializado);
 }
 
-const iniciarCriarQuizz = event => {
+function iniciarCriarQuizz(event) {
     document.querySelector("main").classList.add("escondido");
     document.querySelector(".inicio-criacao form").innerHTML = `
         <div class="informacao-quizz">
