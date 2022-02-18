@@ -29,7 +29,7 @@ function iniciarCriarQuizz(event) {
             <input type="number" class="quantidade-perguntas" name="quantidade-perguntas" min="3" placeholder="Quantidade de perguntas do quizz" required>
             <input type="number" class="quantidade-niveis" name="quantidade-niveis" min="2" placeholder="Quantidade de níveis do quizz" required>
         </div>
-        <input type="submit" class="prosseguir-perguntas" name="prosseguir-perguntas" value="Prosseguir para criar perguntas">`;
+        <input type="submit" class="prosseguir-perguntas" name="prosseguir-perguntas" value="Prosseguir pra criar perguntas">`;
     document.querySelector(".inicio-criacao").classList.remove("escondido");
 
     prosseguirParaPerguntasButton = document.querySelector(".prosseguir-perguntas");
@@ -71,9 +71,9 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
         <div class="cria-pergunta">
             <div class="topo-form">
                 <h2>Pergunta 1</h2>
-                <img src="imagens/Vector.svg" class="escondido" alt="">
+                <img src="imagens/Vector.svg" class="escondido" alt="" data-identifier="expand">
             </div>
-            <div class="campo-form-pergunta">
+            <div class="campo-form-pergunta" data-identifier="question">
                 <div class="definicao-pergunta">
                     <input type="text" class="texto-pergunta" name="texto-pergunta" minlength="20" placeholder="Texto da pergunta" required>
                     <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" placeholder="Cor de fundo da pergunta" required>
@@ -96,9 +96,9 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
             <div class="cria-pergunta">
                 <div class="topo-form">
                     <h2>Pergunta ${i + 1}</h2>
-                    <img src="imagens/Vector.svg" class="" alt="">
+                    <img src="imagens/Vector.svg" class="" alt="" data-identifier="expand">
                 </div>
-                <div class="campo-form-pergunta escondido">
+                <div class="campo-form-pergunta escondido" data-identifier="question">
                     <div class="definicao-pergunta">
                         <input type="text" class="texto-pergunta" name="texto-pergunta" minlength="20" placeholder="Texto da pergunta" required>
                         <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" placeholder="Cor de fundo da pergunta" required>
@@ -196,9 +196,9 @@ function abrirEdicaoNiveis(qtdNiveis) {
         <div class="cria-nivel">
             <div class="topo-form">
                 <h2>Nível 1</h2>
-                <img src="imagens/Vector.svg" class="escondido" alt="">
+                <img src="imagens/Vector.svg" class="escondido" alt="" data-identifier="expand">
             </div>
-            <div class="campo-form-nivel">
+            <div class="campo-form-nivel" data-identifier="level">
                 <input type="text" class="titulo-nivel" name="titulo-nivel" minlength="10" placeholder="Título do nível" required>
                 <input type="number" class="porcentagem-nivel" name="porcentagem-nivel" min="0" max="100"  placeholder="% de acerto mínima" required>
                 <input type="url" class="url-nivel" name="url-nivel" placeholder="URL da imagem do nível" required>
@@ -211,9 +211,9 @@ function abrirEdicaoNiveis(qtdNiveis) {
         <div class="cria-nivel">
             <div class="topo-form">
                 <h2>Nível ${i + 1}</h2>
-                <img src="imagens/Vector.svg" class="" alt="">
+                <img src="imagens/Vector.svg" class="" alt="" data-identifier="expand">
             </div>
-            <div class="campo-form-nivel escondido">
+            <div class="campo-form-nivel escondido" data-identifier="level">
                 <input type="text" class="titulo-nivel" name="titulo-nivel" minlength="10" placeholder="Título do nível" required>
                 <input type="number" class="porcentagem-nivel" name="porcentagem-nivel" min="0" max="100" placeholder="% de acerto mínima" required>
                 <input type="url" class="url-nivel" name="url-nivel" placeholder="URL da imagem do nível" required>

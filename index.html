@@ -28,16 +28,16 @@
 
         <section class="criar-quiz">
             <p>Você não criou nenhum quizz ainda :(</p>
-            <button>Criar Quizz</button>
+            <button data-identifier="create-quizz">Criar Quizz</button>
         </section>
 
 
         <!--Seus Quizzes-->
         <div class="topo-seus-quizes escondido">
             <h2>Seus Quizzes</h2>
-            <ion-icon name="add-circle-sharp"></ion-icon>
+            <ion-icon name="add-circle-sharp" data-identifier="create-quizz"></ion-icon>
         </div>
-        <ul class="seus-quizzes escondido">
+        <ul class="seus-quizzes escondido" data-identifier="user-quizzes">
             <li class="quizz">
                 <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
                 <div class="cover"></div>
@@ -53,7 +53,7 @@
 
         <!--Todos os quizzes-->
         <h2>Todos os Quizzes</h2>
-        <ul class="quizzes">
+        <ul class="quizzes" data-identifier="general-quizzes">
         </ul>
     </main>
 
@@ -103,7 +103,7 @@
             <div class="cria-pergunta">
                 <div class="topo-form">
                     <h2>Pergunta 1</h2>
-                    <img src="imagens/Vector.svg" class="escondido" alt="">
+                    <img src="imagens/Vector.svg" class="escondido" alt="" >
                 </div>
                 <div class="campo-form-pergunta">
                     <div class="definicao-pergunta">
