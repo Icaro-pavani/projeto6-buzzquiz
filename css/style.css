@@ -505,6 +505,7 @@ input.url-resposta-incorreta {
     color: #bababa;
 }
 
+textarea:focus,
 input:focus {
     outline: none;
 }

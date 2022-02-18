@@ -2,15 +2,34 @@ const criarQuizzButton = document.querySelector(".criar-quiz button");
 const criarQuizzIcon = document.querySelector(".seus-quizzes ion-icon");
 const formInicioCriacaoQuizz = document.querySelector(".inicio-criacao form");
 let formCriacaoPerguntas = null;
-const prosseguirParaPerguntasButton = document.querySelector(".prosseguir-perguntas");
+let formCriacaoNiveis = null;
+let prosseguirParaPerguntasButton = null;
 let prosseguirParaNiveisButton = null;
+let finalizarCriacaoQuizzButton = null;
 
 let infoBasicas = {};
 let perguntasCriadas = [];
 
 const iniciarCriarQuizz = event => {
     document.querySelector("main").classList.add("escondido");
+    document.querySelector(".inicio-criacao form").innerHTML = `
+        <div class="informacao-quizz">
+            <input type="text" class="nome-titulo" name="nome-titulo" minlength="20" maxlength="65" placeholder="Título de seu quizz" oninvalid="invalidMsg(this);" oninput="invalidMsg(this);" required>
+            <input type="url" class="url" name="url" placeholder="URL da imagem do seu quizz" required>
+            <input type="number" class="quantidade-perguntas" name="quantidade-perguntas" min="3" placeholder="Quantidade de perguntas do quizz" required>
+            <input type="number" class="quantidade-niveis" name="quantidade-niveis" min="2" placeholder="Quantidade de níveis do quizz" required>
+        </div>
+        <input type="submit" class="prosseguir-perguntas" name="prosseguir-perguntas" value="Prosseguir para criar perguntas">`;
     document.querySelector(".inicio-criacao").classList.remove("escondido");
+
+    prosseguirParaPerguntasButton = document.querySelector(".prosseguir-perguntas");
+    prosseguirParaPerguntasButton.addEventListener("click", () => {
+        const listaInputsInvalidos = formInicioCriacaoQuizz.querySelectorAll(":invalid");
+        // console.log(list);
+        if (listaInputsInvalidos.length !== 0) {
+            alert("Preencha os dados corretamente");
+        }
+    });
 }
 
 criarQuizzButton.addEventListener("click", iniciarCriarQuizz);
@@ -30,15 +49,7 @@ formInicioCriacaoQuizz.addEventListener("submit", event => {
     };
     document.querySelector(".inicio-criacao").classList.add("escondido");
     abrirEdicaoPerguntas(infoBasicas.qtdPerguntas);
-})
-
-prosseguirParaPerguntasButton.addEventListener("click", () => {
-    const listaInputsInvalidos = formInicioCriacaoQuizz.querySelectorAll(":invalid");
-    // console.log(list);
-    if (listaInputsInvalidos.length !== 0) {
-        alert("Preencha os dados corretamente");
-    }
-})
+});
 
 function invalidMsg(element) {
     element.setCustomValidity('');
@@ -117,7 +128,7 @@ function configurarButtonProsseguirParaNiveis(button) {
         // console.log(listaInputRespostasIncorretas);
         for (let i = 0; i < listaInputRespostasIncorretas.length; i++) {
             if (listaInputRespostasIncorretas[i].value) {
-                console.log(listaInputRespostasIncorretas[i]);
+                // console.log(listaInputRespostasIncorretas[i]);
                 listaInputRespostasIncorretas[i].previousElementSibling.setAttribute("required", "");
             }
         }
@@ -131,12 +142,13 @@ function configurarButtonProsseguirParaNiveis(button) {
     formCriacaoPerguntas.addEventListener("submit", event => {
         event.preventDefault();
         armazenarInformacoesPerguntas();
+        abrirEdicaoNiveis(infoBasicas.qtdNiveis);
     })    
 }
 
 function armazenarInformacoesPerguntas() {
     const perguntas = document.querySelectorAll(".campo-form-pergunta");
-    let elementoRespostas = null;
+    // let elementoRespostas = null;
     let respostas = [];
     let infoPerguntaTemporario = {};
 
@@ -166,4 +178,84 @@ function armazenarInformacoesPerguntas() {
             answer: infoPerguntaTemporario.answer
         });
     }
+}
+
+function abrirEdicaoNiveis(qtdNiveis) {
+    formCriacaoNiveis = document.querySelector(".criacao-niveis form");
+    formCriacaoNiveis.innerHTML = `
+        <div class="cria-nivel">
+            <div class="topo-form">
+                <h2>Nível 1</h2>
+                <img src="imagens/Vector.svg" class="escondido" alt="">
+            </div>
+            <div class="campo-form-nivel">
+                <input type="text" class="titulo-nivel" name="titulo-nivel" minlength="10" placeholder="Título do nível" required>
+                <input type="number" class="porcentagem-nivel" name="porcentagem-nivel" min="0" max="100"  placeholder="% de acerto mínima" required>
+                <input type="url" class="url-nivel" name="url-nivel" placeholder="URL da imagem do nível" required>
+                <textarea class="texto-nivel" name="texto-nivel" minlength="30" placeholder="Descrição do nível"></textarea>
+            </div>
+        </div>`;
+    
+    for (let i = 1; i < qtdNiveis; i++){
+        formCriacaoNiveis.innerHTML += `
+        <div class="cria-nivel">
+            <div class="topo-form">
+                <h2>Nível ${i + 1}</h2>
+                <img src="imagens/Vector.svg" class="" alt="">
+            </div>
+            <div class="campo-form-nivel escondido">
+                <input type="text" class="titulo-nivel" name="titulo-nivel" minlength="10" placeholder="Título do nível" required>
+                <input type="number" class="porcentagem-nivel" name="porcentagem-nivel" min="0" max="100" placeholder="% de acerto mínima" required>
+                <input type="url" class="url-nivel" name="url-nivel" placeholder="URL da imagem do nível" required>
+                <textarea class="texto-nivel" name="texto-nivel" minlength="30" placeholder="Descrição do nível"></textarea>
+            </div>
+        </div>`;
+    }
+    formCriacaoNiveis.innerHTML += `<input type="submit" class="prosseguir-finalizar" value="Finalizar Quizz">`;
+    document.querySelector(".criacao-perguntas").classList.add("escondido");
+
+    const elementoCriacaoNiveis = document.querySelector(".criacao-niveis");
+    elementoCriacaoNiveis.classList.remove("escondido");
+    const expandirEditorNiveisButtons = document.querySelectorAll(".criacao-niveis img");
+    for (botao of expandirEditorNiveisButtons) {
+        botao.addEventListener("click", function() {
+            this.parentNode.parentNode.querySelector(".campo-form-nivel").classList.remove("escondido");
+            this.classList.add("escondido");
+        })
+    }
+
+    finalizarCriacaoQuizzButton = document.querySelector(".prosseguir-finalizar");
+    configurarButtonFinalizarCriacaoQuiz(finalizarCriacaoQuizzButton);
+}
+
+function configurarButtonFinalizarCriacaoQuiz(button) {
+    button.addEventListener("click", () => {
+        const listaPorcentagemNiveis = formCriacaoNiveis.querySelectorAll(".porcentagem-nivel");
+        let contador = 0;
+        for (nivel of listaPorcentagemNiveis) {
+            // console.log(nivel.value);
+            // console.log(contador);
+            if (parseInt(nivel.value) === 0){
+                contador++;
+            }
+        }
+        if (contador === 0){
+            // alert("Uma porcentagem precisa ser 0");
+            document.querySelector(".porcentagem-nivel").setCustomValidity("Uma porcentagem precisa ser 0");
+        } else {
+            document.querySelector(".porcentagem-nivel").setCustomValidity("");
+        }
+        
+        const listaInputsInvalidos = formCriacaoNiveis.querySelectorAll(":invalid");
+        // console.log(list);
+        if (listaInputsInvalidos.length !== 0) {
+            alert("Preencha os dados corretamente");
+        }
+    });
+
+    formCriacaoNiveis.addEventListener("submit", event => {
+        event.preventDefault();
+        // console.log("success");
+        
+    })
 }
