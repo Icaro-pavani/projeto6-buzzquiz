@@ -1,3 +1,5 @@
+const ENDERECO_POST_QUIZZES = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
+
 const criarQuizzButton = document.querySelector(".criar-quiz button");
 const criarQuizzIcon = document.querySelector(".seus-quizzes ion-icon");
 const formInicioCriacaoQuizz = document.querySelector(".inicio-criacao form");
@@ -11,6 +13,12 @@ let infoBasicas = {};
 let perguntasCriadas = [];
 let niveisCriados = [];
 let quizzObjetoCriado = {};
+let meusQuizzes = [];
+
+let meusQuizzSerializado = localStorage.getItem("quizzes");
+if (meusQuizzSerializado !== null){
+    meusQuizzes = JSON.parse(meusQuizzSerializado);
+}
 
 const iniciarCriarQuizz = event => {
     document.querySelector("main").classList.add("escondido");
@@ -177,7 +185,7 @@ function armazenarInformacoesPerguntas() {
         perguntasCriadas.push({
             title: infoPerguntaTemporario.title,
             color: infoPerguntaTemporario.color,
-            answer: infoPerguntaTemporario.answer
+            answers: infoPerguntaTemporario.answer
         });
     }
 }
@@ -261,6 +269,7 @@ function configurarButtonFinalizarCriacaoQuiz(button) {
         armazenarInformacoesNiveis();
         criarObjetoQuizParaEnvio();
         console.log(quizzObjetoCriado);
+        enviarQuizzParaServidor();
     })
 }
 
@@ -283,4 +292,63 @@ function criarObjetoQuizParaEnvio() {
         questions: perguntasCriadas,
         levels: niveisCriados
     };
+    infoBasicas = {};
+    perguntasCriadas = [];
+    levels = [];
+}
+
+function enviarQuizzParaServidor() {
+    const requisicao = axios.post(ENDERECO_POST_QUIZZES, quizzObjetoCriado);
+    
+    requisicao.then(abrirTelaFimCriacao);
+    requisicao.catch(mostrarMensagemErro);
+}
+
+function mostrarMensagemErro(erro) {
+    console.log(erro.response.data);
+    console.log(erro.response.status);
+}
+
+function abrirTelaFimCriacao(resposta) {
+    console.log(resposta.data);
+    const objetoResposta = resposta.data;
+    
+    if (meusQuizzes.length === 0){
+        meusQuizzes.push({
+            id: objetoResposta.id,
+            key: objetoResposta.key
+        });
+    } else {
+        let contador = 0;
+        for (quizz of meusQuizzes){
+            if (quizz.id === objetoResposta.id){
+                contador++;
+            }
+        }
+        if (contador === 0) {
+            meusQuizzes.push({
+                id: objetoResposta.id,
+                key: objetoResposta.key
+            });
+        }
+    }
+
+    meusQuizzSerializado = JSON.stringify(meusQuizzes);
+    localStorage.setItem("quizzes", meusQuizzSerializado);
+
+    document.querySelector(".criacao-niveis").classList.add("escondido");
+    const telaFimCriacao = document.querySelector(".fim-criacao");
+    telaFimCriacao.innerHTML = `
+        <h2>Seu quizz está pronto!</h2>
+        <div class="quizz" onclick="jogarQuizz(${objetoResposta.id});">
+            <img src="${objetoResposta.image}" alt="">
+            <div class="cover"></div>
+            <p>${objetoResposta.title}</p>
+        </div>
+        <div class="botoes-fim-criacao-quizz">
+            <button class="acessar-quizz" onclick="jogarQuizz(${objetoResposta.id});">Acessar Quizz</button>
+            <button class="home-fim">Voltar para home</button>
+        </div>`;
+    telaFimCriacao.classList.remove("escondido");
+       
 }
