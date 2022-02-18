@@ -9,6 +9,8 @@ let finalizarCriacaoQuizzButton = null;
 
 let infoBasicas = {};
 let perguntasCriadas = [];
+let niveisCriados = [];
+let quizzObjetoCriado = {};
 
 const iniciarCriarQuizz = event => {
     document.querySelector("main").classList.add("escondido");
@@ -256,6 +258,29 @@ function configurarButtonFinalizarCriacaoQuiz(button) {
     formCriacaoNiveis.addEventListener("submit", event => {
         event.preventDefault();
         // console.log("success");
-        
+        armazenarInformacoesNiveis();
+        criarObjetoQuizParaEnvio();
+        console.log(quizzObjetoCriado);
     })
+}
+
+function armazenarInformacoesNiveis() {
+    const niveis = document.querySelectorAll(".campo-form-nivel");
+    for (nivel of niveis) {
+        niveisCriados.push({
+            title: nivel.querySelector(".titulo-nivel").value,
+            image: nivel.querySelector(".url-nivel").value,
+            text: nivel.querySelector(".texto-nivel").value,
+            minValue: parseInt(nivel.querySelector(".porcentagem-nivel").value)
+        });
+    }
+}
+
+function criarObjetoQuizParaEnvio() {
+    quizzObjetoCriado = {
+        title: infoBasicas.titulo,
+        image: infoBasicas.url,
+        questions: perguntasCriadas,
+        levels: niveisCriados
+    };
 }
