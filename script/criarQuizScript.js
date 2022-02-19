@@ -4,8 +4,8 @@ const criarQuizzButton = document.querySelector(".criar-quiz button");
 const criarQuizzIcon = document.querySelector(".topo-seus-quizes ion-icon");
 const formInicioCriacaoQuizz = document.querySelector(".inicio-criacao form");
 const telaLoading = document.querySelector(".loading");
-let formCriacaoPerguntas = null;
-let formCriacaoNiveis = null;
+const formCriacaoPerguntas = document.querySelector(".criacao-perguntas form");
+const formCriacaoNiveis = document.querySelector(".criacao-niveis form");
 let prosseguirParaPerguntasButton = null;
 let prosseguirParaNiveisButton = null;
 let finalizarCriacaoQuizzButton = null;
@@ -21,25 +21,92 @@ if (meusQuizzSerializado !== null){
     meusQuizzes = JSON.parse(meusQuizzSerializado);
 }
 
-function iniciarCriarQuizz(event) {
+function eliminarBalaoDialogoErroForms(form) {
+    form.addEventListener("invalid", event => {
+        event.preventDefault();
+    }, true);
+}
+
+function criarMensagensInputsInvalidos(inputsInvalidos, inputsValidos, formulario) {
+    let mensagemErro;
+    // Esconder mensagens de erros existentes
+    const textosDeErros = formulario.querySelectorAll("p");
+    for (let i = 0; i < textosDeErros.length; i++){
+        textosDeErros[i].classList.add("escondido");
+    }
+
+    // Deixa o layout padrão para os inputs validos
+    if (inputsValidos.length > 1){
+        for (let i = 0; i < inputsValidos.length - 1; i++){
+            inputsValidos[i].style.backgroundColor = "#fff";
+            mensagemErro = inputsValidos[i].nextElementSibling;
+            mensagemErro.classList.add("escondido");
+        }
+    }
+
+    // Adiciona as mensagens de erro de preenchimento abaixo dos inputs
+    for (let i = 0; i < inputsInvalidos.length; i++) {
+        inputsInvalidos[i].style.backgroundColor = "#ffe9e9";
+        mensagemErro = inputsInvalidos[i].nextElementSibling;
+        mensagemErro.innerHTML = inputsInvalidos[i].validationMessage;
+        mensagemErro.classList.remove("escondido");
+    }
+
+    // Foca no primeira campo invalido
+    if (inputsInvalidos.length > 0){
+        inputsInvalidos[0].focus();
+    }
+}
+
+function iniciarCriarQuizz() {
     document.querySelector("main").classList.add("escondido");
     document.querySelector(".inicio-criacao form").innerHTML = `
         <div class="informacao-quizz">
             <input type="text" class="nome-titulo" name="nome-titulo" minlength="20" maxlength="65" placeholder="Título de seu quizz" oninvalid="invalidMsg(this);" oninput="invalidMsg(this);" required>
+            <p class="mensagem-erro escondido"></p>
             <input type="url" class="url" name="url" placeholder="URL da imagem do seu quizz" required>
+            <p class="mensagem-erro escondido"></p>
             <input type="number" class="quantidade-perguntas" name="quantidade-perguntas" min="3" placeholder="Quantidade de perguntas do quizz" required>
+            <p class="mensagem-erro escondido"></p>
             <input type="number" class="quantidade-niveis" name="quantidade-niveis" min="2" placeholder="Quantidade de níveis do quizz" required>
+            <p class="mensagem-erro escondido"></p>
         </div>
         <input type="submit" class="prosseguir-perguntas" name="prosseguir-perguntas" value="Prosseguir pra criar perguntas">`;
     document.querySelector(".inicio-criacao").classList.remove("escondido");
 
     prosseguirParaPerguntasButton = document.querySelector(".prosseguir-perguntas");
+    eliminarBalaoDialogoErroForms(formInicioCriacaoQuizz);
     prosseguirParaPerguntasButton.addEventListener("click", () => {
         const listaInputsInvalidos = formInicioCriacaoQuizz.querySelectorAll(":invalid");
+        const listaInputsValidos = formInicioCriacaoQuizz.querySelectorAll(":valid");
         // console.log(list);
-        if (listaInputsInvalidos.length !== 0) {
-            alert("Preencha os dados corretamente");
-        }
+        // if (listaInputsInvalidos.length !== 0) {
+        //     alert("Preencha os dados corretamente");
+        // }
+
+        criarMensagensInputsInvalidos(listaInputsInvalidos, listaInputsValidos, formInicioCriacaoQuizz);
+        // let mensagemErro;
+        // // Esconder mensagens de erros existentes
+        // const textosDeErros = formInicioCriacaoQuizz.querySelectorAll("p");
+        // for (let i = 0; i < textosDeErros.length; i++){
+        //     textosDeErros[i].classList.add("escondido");
+        // }
+
+        // if (listaInputsValidos.length > 1){
+        //     for (let i = 0; i < listaInputsValidos.length - 1; i++){
+        //         listaInputsValidos[i].style.backgroundColor = "#fff";
+        //         mensagemErro = listaInputsValidos[i].nextElementSibling;
+        //         mensagemErro.classList.add("escondido");
+        //     }
+        // }
+
+        // // Adiciona as mensagens de erro de preenchimento abaixo dos inputs
+        // for (let i = 0; i < listaInputsInvalidos.length; i++) {
+        //     listaInputsInvalidos[i].style.backgroundColor = "#ffe9e9";
+        //     mensagemErro = listaInputsInvalidos[i].nextElementSibling;
+        //     mensagemErro.innerHTML = listaInputsInvalidos[i].validationMessage;
+        //     mensagemErro.classList.remove("escondido");
+        // }
     });
 }
 
@@ -62,12 +129,14 @@ formInicioCriacaoQuizz.addEventListener("submit", event => {
     abrirEdicaoPerguntas(infoBasicas.qtdPerguntas);
 });
 
+// formInicioCriacaoQuizz.addEventListener("")
+
 function invalidMsg(element) {
     element.setCustomValidity('');
 }
 
 function abrirEdicaoPerguntas(qtdPerguntas) {
-    formCriacaoPerguntas = document.querySelector(".criacao-perguntas form");
+    // formCriacaoPerguntas = document.querySelector(".criacao-perguntas form");
     formCriacaoPerguntas.innerHTML = `
         <div class="cria-pergunta">
             <div class="topo-form">
@@ -77,18 +146,28 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
             <div class="campo-form-pergunta" data-identifier="question">
                 <div class="definicao-pergunta">
                     <input type="text" class="texto-pergunta" name="texto-pergunta" minlength="20" placeholder="Texto da pergunta" required>
+                    <p class="mensagem-erro escondido"></p>
                     <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" placeholder="Cor de fundo da pergunta" required>
+                    <p class="mensagem-erro escondido"></p>
                 </div>
                 <h3>Resposta correta</h3>
                 <input type="text" class="resposta-correta" name="resposta-correta" placeholder="Resposta correta" required>
+                <p class="mensagem-erro escondido"></p>
                 <input type="url" class="url-resposta-correta" name="url-resposta-correta" placeholder="URL da imagem" required>
+                <p class="mensagem-erro escondido"></p>
                 <h4>Respostas incorretas</h3>
-                <input type="text" class="resposta-incorreta" name="resposta-incorreta1" placeholder="Resposta incorreta 1" required>
+                <input type="text" class="resposta-incorreta primeira" name="resposta-incorreta1" placeholder="Resposta incorreta 1" required>
+                <p class="mensagem-erro escondido"></p>
                 <input type="url" class="url-resposta-incorreta" name="url-resposta-incorreta1" placeholder="URL da imagem 1" required>
+                <p class="mensagem-erro escondido"></p>
                 <input type="text" class="resposta-incorreta" name="resposta-incorreta2" placeholder="Resposta incorreta 2">
+                <p class="mensagem-erro escondido"></p>
                 <input type="url" class="url-resposta-incorreta" name="url-resposta-incorreta2" placeholder="URL da imagem 2">
+                <p class="mensagem-erro escondido"></p>
                 <input type="text" class="resposta-incorreta" name="resposta-incorreta3" placeholder="Resposta incorreta 3">
+                <p class="mensagem-erro escondido"></p>
                 <input type="url" class="url-resposta-incorreta" name="url-resposta-incorreta"  placeholder="URL da imagem 3">
+                <p class="mensagem-erro escondido"></p>
             </div>
         </div>`;
     
@@ -102,18 +181,28 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
                 <div class="campo-form-pergunta escondido" data-identifier="question">
                     <div class="definicao-pergunta">
                         <input type="text" class="texto-pergunta" name="texto-pergunta" minlength="20" placeholder="Texto da pergunta" required>
+                        <p class="mensagem-erro escondido"></p>
                         <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" placeholder="Cor de fundo da pergunta" required>
+                        <p class="mensagem-erro escondido"></p>
                     </div>
                     <h3>Resposta correta</h3>
                     <input type="text" class="resposta-correta" name="resposta-correta" placeholder="Resposta correta" required>
+                    <p class="mensagem-erro escondido"></p>
                     <input type="url" class="url-resposta-correta" name="url-resposta-correta" placeholder="URL da imagem" required>
+                    <p class="mensagem-erro escondido"></p>
                     <h4>Respostas incorretas</h3>
-                    <input type="text" class="resposta-incorreta" name="resposta-incorreta1" placeholder="Resposta incorreta 1" required>
+                    <input type="text" class="resposta-incorreta primeira" name="resposta-incorreta1" placeholder="Resposta incorreta 1" required>
+                    <p class="mensagem-erro escondido"></p>
                     <input type="url" class="url-resposta-incorreta" name="url-resposta-incorreta1" placeholder="URL da imagem 1" required>
+                    <p class="mensagem-erro escondido"></p>
                     <input type="text" class="resposta-incorreta" name="resposta-incorreta2" placeholder="Resposta incorreta 2">
+                    <p class="mensagem-erro escondido"></p>
                     <input type="url" class="url-resposta-incorreta" name="url-resposta-incorreta2" placeholder="URL da imagem 2">
+                    <p class="mensagem-erro escondido"></p>
                     <input type="text" class="resposta-incorreta" name="resposta-incorreta3" placeholder="Resposta incorreta 3">
+                    <p class="mensagem-erro escondido"></p>
                     <input type="url" class="url-resposta-incorreta" name="url-resposta-incorreta"  placeholder="URL da imagem 3">
+                    <p class="mensagem-erro escondido"></p>
                 </div>
             </div>`;
     }
@@ -134,27 +223,32 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
 }
 
 function configurarButtonProsseguirParaNiveis(button) {
+    eliminarBalaoDialogoErroForms(formCriacaoPerguntas);
     button.addEventListener("click", () => {
-        const listaInputRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".url-resposta-incorreta");
+        const listaURLRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".url-resposta-incorreta");
+        const listaTextoRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".resposta-incorreta");
+
         // console.log(listaInputRespostasIncorretas);
-        for (let i = 0; i < listaInputRespostasIncorretas.length; i++) {
-            if (listaInputRespostasIncorretas[i].value) {
+        for (let i = 0; i < listaURLRespostasIncorretas.length; i++) {
+            if (listaURLRespostasIncorretas[i].value) {
                 // console.log(listaInputRespostasIncorretas[i]);
-                listaInputRespostasIncorretas[i].previousElementSibling.setAttribute("required", "");
+                listaTextoRespostasIncorretas[i].setAttribute("required", "");
             }
         }
         const listaInputsInvalidos = formCriacaoPerguntas.querySelectorAll(":invalid");
+        const listaInputsValidos = formCriacaoPerguntas.querySelectorAll(":valid");
+        criarMensagensInputsInvalidos(listaInputsInvalidos, listaInputsValidos, formCriacaoPerguntas);
         // console.log(listaInputsInvalidos);
-        if (listaInputsInvalidos.length !== 0) {
-            alert("Preencha os dados corretamente");
-        }
+        // if (listaInputsInvalidos.length !== 0) {
+        //     alert("Preencha os dados corretamente");
+        // }
     });
 
     formCriacaoPerguntas.addEventListener("submit", event => {
         event.preventDefault();
         armazenarInformacoesPerguntas();
         abrirEdicaoNiveis(infoBasicas.qtdNiveis);
-    })    
+    });
 }
 
 function armazenarInformacoesPerguntas() {
@@ -192,7 +286,7 @@ function armazenarInformacoesPerguntas() {
 }
 
 function abrirEdicaoNiveis(qtdNiveis) {
-    formCriacaoNiveis = document.querySelector(".criacao-niveis form");
+    // formCriacaoNiveis = document.querySelector(".criacao-niveis form");
     formCriacaoNiveis.innerHTML = `
         <div class="cria-nivel">
             <div class="topo-form">
@@ -201,9 +295,13 @@ function abrirEdicaoNiveis(qtdNiveis) {
             </div>
             <div class="campo-form-nivel" data-identifier="level">
                 <input type="text" class="titulo-nivel" name="titulo-nivel" minlength="10" placeholder="Título do nível" required>
+                <p class="mensagem-erro escondido"></p>
                 <input type="number" class="porcentagem-nivel" name="porcentagem-nivel" min="0" max="100"  placeholder="% de acerto mínima" required>
+                <p class="mensagem-erro escondido"></p>
                 <input type="url" class="url-nivel" name="url-nivel" placeholder="URL da imagem do nível" required>
-                <textarea class="texto-nivel" name="texto-nivel" minlength="30" placeholder="Descrição do nível"></textarea>
+                <p class="mensagem-erro escondido"></p>
+                <textarea class="texto-nivel" name="texto-nivel" minlength="30" placeholder="Descrição do nível" required></textarea>
+                <p class="mensagem-erro escondido"></p>
             </div>
         </div>`;
     
@@ -216,9 +314,13 @@ function abrirEdicaoNiveis(qtdNiveis) {
             </div>
             <div class="campo-form-nivel escondido" data-identifier="level">
                 <input type="text" class="titulo-nivel" name="titulo-nivel" minlength="10" placeholder="Título do nível" required>
+                <p class="mensagem-erro escondido"></p>
                 <input type="number" class="porcentagem-nivel" name="porcentagem-nivel" min="0" max="100" placeholder="% de acerto mínima" required>
+                <p class="mensagem-erro escondido"></p>
                 <input type="url" class="url-nivel" name="url-nivel" placeholder="URL da imagem do nível" required>
-                <textarea class="texto-nivel" name="texto-nivel" minlength="30" placeholder="Descrição do nível"></textarea>
+                <p class="mensagem-erro escondido"></p>
+                <textarea class="texto-nivel" name="texto-nivel" minlength="30" placeholder="Descrição do nível" required></textarea>
+                <p class="mensagem-erro escondido"></p>
             </div>
         </div>`;
     }
@@ -240,6 +342,7 @@ function abrirEdicaoNiveis(qtdNiveis) {
 }
 
 function configurarButtonFinalizarCriacaoQuiz(button) {
+    eliminarBalaoDialogoErroForms(formCriacaoNiveis);
     button.addEventListener("click", () => {
         const listaPorcentagemNiveis = formCriacaoNiveis.querySelectorAll(".porcentagem-nivel");
         let contador = 0;
@@ -258,10 +361,12 @@ function configurarButtonFinalizarCriacaoQuiz(button) {
         }
         
         const listaInputsInvalidos = formCriacaoNiveis.querySelectorAll(":invalid");
+        const listaInputsValidos = formCriacaoNiveis.querySelectorAll(":valid");
+        criarMensagensInputsInvalidos(listaInputsInvalidos, listaInputsValidos, formCriacaoNiveis);
         // console.log(list);
-        if (listaInputsInvalidos.length !== 0) {
-            alert("Preencha os dados corretamente");
-        }
+        // if (listaInputsInvalidos.length !== 0) {
+        //     alert("Preencha os dados corretamente");
+        // }
     });
 
     formCriacaoNiveis.addEventListener("submit", event => {

@@ -378,7 +378,6 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #fff;
     margin-bottom: 61px;
 }
 
@@ -386,7 +385,7 @@ form input {
     font-family: 'Roboto', sans-serif;
 }
 
-.informacao-quizz,
+
 .cria-pergunta,
 .cria-nivel {
     width: 100%;
@@ -394,11 +393,24 @@ form input {
     flex-direction: column;
     align-items: left;
     justify-content: center;
-    /* background-color: #fff; */
+    background-color: #fff;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-    padding-top: 21px;
-    padding-bottom: 18px;
+    padding-top: 27px;
+    padding-bottom: 27px;
     margin-bottom: 29px;
+}
+
+.informacao-quizz {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    padding-top: 7px;
+    padding-bottom: 27px;
+    margin-bottom: 24px;
 }
 
 .informacao-quizz input,
@@ -406,7 +418,7 @@ form input {
 .cria-nivel input {
     height: 46px;
     width: 90%;
-    margin: 0 18px 9px;
+    margin: 14px auto 0px;
     font-size: 19px;
     line-height: 22px;
     font-weight: 400;
@@ -415,6 +427,14 @@ form input {
     border-radius: 5px;
     padding-left: 18px;
     font-family: 'Roboto', sans-serif;
+}
+
+.definicao-pergunta,
+.campo-form-pergunta,
+.campo-form-nivel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .prosseguir-perguntas,
@@ -449,7 +469,7 @@ form input {
     line-height: 23px;
     font-weight: 700;
     text-align: left;
-    margin: 28px auto 24px;
+    margin: 28px auto 15px;
 }
 
 .cria-pergunta h4 {
@@ -458,13 +478,13 @@ form input {
     line-height: 23px;
     font-weight: 700;
     text-align: left;
-    margin: 28px auto 14px;
+    margin: 28px auto 5px;
 }
 
 .cria-nivel textarea {
     height: 177px;
     width: 90%;
-    margin: 0 18px 9px;
+    margin: 9px 18px 0px;
     font-size: 19px;
     line-height: 22px;
     font-weight: 400;
@@ -497,8 +517,20 @@ form input {
     border-radius: 5px;
 }
 
-input.url-resposta-incorreta {
-    margin: 0 18px 29px;
+input.resposta-incorreta {
+    margin-top: 29px;
+}
+
+input.primeira {
+    margin-top: 9px;
+}
+
+.mensagem-erro {
+    width: 90%;
+    font-size: 16px;
+    line-height: 19px;
+    color: var(--background--color-title);
+    margin: 3px auto 0;
 }
 
 .loading {
@@ -529,6 +561,10 @@ input.url-resposta-incorreta {
 textarea:focus,
 input:focus {
     outline: none;
+}
+
+.input-erro {
+    background-color: #ffe9e9;
 }
 
 .escondido {
