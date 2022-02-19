@@ -1,8 +1,9 @@
-const ENDERECO_POST_QUIZZES = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
+// const ENDERECO_POST_QUIZZES = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
 
 const criarQuizzButton = document.querySelector(".criar-quiz button");
 const criarQuizzIcon = document.querySelector(".topo-seus-quizes ion-icon");
 const formInicioCriacaoQuizz = document.querySelector(".inicio-criacao form");
+const telaLoading = document.querySelector(".loading");
 let formCriacaoPerguntas = null;
 let formCriacaoNiveis = null;
 let prosseguirParaPerguntasButton = null;
@@ -298,7 +299,9 @@ function criarObjetoQuizParaEnvio() {
 }
 
 function enviarQuizzParaServidor() {
-    const requisicao = axios.post(ENDERECO_POST_QUIZZES, quizzObjetoCriado);
+    document.querySelector(".criacao-niveis").classList.add("escondido");
+    toggleTelaLoading();
+    const requisicao = axios.post(ENDERECO_QUIZZES, quizzObjetoCriado);
     
     requisicao.then(abrirTelaFimCriacao);
     requisicao.catch(mostrarMensagemErro);
@@ -336,7 +339,8 @@ function abrirTelaFimCriacao(resposta) {
     meusQuizzSerializado = JSON.stringify(meusQuizzes);
     localStorage.setItem("quizzes", meusQuizzSerializado);
 
-    document.querySelector(".criacao-niveis").classList.add("escondido");
+    // document.querySelector(".criacao-niveis").classList.add("escondido");
+
     const telaFimCriacao = document.querySelector(".fim-criacao");
     telaFimCriacao.innerHTML = `
         <h2>Seu quizz está pronto!</h2>
@@ -350,8 +354,13 @@ function abrirTelaFimCriacao(resposta) {
             <button class="home-fim" onclick="refreshPage();">Voltar para home</button>
         </div>`;
     telaFimCriacao.classList.remove("escondido");
+    toggleTelaLoading();
 }
 
 function refreshPage() {
     window.location.reload();
+}
+
+function toggleTelaLoading() {
+    telaLoading.classList.toggle("escondido");
 }

@@ -501,6 +501,26 @@ input.url-resposta-incorreta {
     margin: 0 18px 29px;
 }
 
+.loading {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading img {
+    width: 76px;
+    height: 76px;
+}
+
+.loading p {
+    font-size: 25px;
+    line-height: 29px;
+    color: var(--background--color-title);
+}
+
 
 ::placeholder {
     color: #bababa;

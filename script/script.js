@@ -14,6 +14,9 @@ function obterTodosOsQuizzes() {
     const promise = axios.get(ENDERECO_QUIZZES);
 
     promise.then((response) => {
+        toggleTelaLoading();
+        const telaInicial = document.querySelector("main");
+        telaInicial.classList.remove("escondido");
         const quizzes = response.data;
         ulQuizzes.innerHTML = "";
         quizzes.forEach(renderizarQuizz);
@@ -38,12 +41,14 @@ function renderizarQuizz(quizz) {
 
 // Função chamada quando o usuário clica em quizz na tela inicial
 function jogarQuizz(id) {
+    toggleTelaLoading();
+    esconderElementosDaTelaInicial();
     const promise = axios.get(`${ENDERECO_QUIZZES}/${id}`);
     promise.then((response) => {
-        esconderElementosDaTelaInicial();
-        mostrarTelaDoQuizz();
         divPerguntasdoQuizzSelecionado.innerHTML = "";
         carregarQuizz(response.data);
+        mostrarTelaDoQuizz();
+        toggleTelaLoading();
     })
 
     promise.catch((error) => { console(error.response) })
