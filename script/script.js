@@ -45,11 +45,7 @@ function obterTodosOsQuizzes() {
 
 // Obtem os Id dos Quizzes presentes no localStorage
 function obterIdMeusQuizzes() {
-    idMeusQuizzes = meusQuizzes.map(() => {
-        for (let i = 0; i < meusQuizzes.length; i++) {
-            return meusQuizzes[i].id;
-        }
-    })
+    idMeusQuizzes = meusQuizzes.map(quizz => quizz.id);
 }
 
 
