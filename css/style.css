@@ -18,8 +18,8 @@ body {
     background-color: var(--backgroundcolor-body);
 }
 
-/* Cursor pointer nos botões */
-button:hover{
+/* Cursor pointer nos botões, ion-icons e inputs do tipo submit */
+button:hover, ion-icon:hover, input[type="submit"]{
     cursor: pointer;
 }
 

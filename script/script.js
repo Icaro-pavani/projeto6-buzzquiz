@@ -56,7 +56,7 @@ function renderizarQuizz(quizz) {
     const imagem = quizz.image;
 
     ulInnerHTML = `
-    <li class="quizz" onclick="jogarQuizz(${id})">
+    <li class="quizz" onclick="jogarQuizz(${id}) data-identifier="quizz-card"">
         <img src="${imagem}" alt="${imagem}">
         <div class="cover"></div>
         <p>${title}</p>
@@ -164,11 +164,11 @@ function carregarQuestao(questao) {
 
     // Cria a pergunta no HTML
     divPerguntasdoQuizzSelecionado.innerHTML += `
-    <div class="pergunta">
-    <h3><span>${titulo}</span></h3>
+    <div class="pergunta" data-identifier="question">
+        <h3><span>${titulo}</span></h3>
         <ul class="respostas">
         </ul>
-        </div>
+    </div>
         `;
 
     // Recupera a ultima pergunta adicionada
@@ -185,13 +185,13 @@ function carregarQuestao(questao) {
     for (let i = 0; i < respostas.length; i++) {
         let resposta = respostas[i];
         ultimaListaDeQuestoes.innerHTML += `
-        <li class="resposta" onClick="selecionarResposta(this, ${indicePergunta}, ${i})">
-        <div class="imagem-resposta">
+        <li class="resposta" onClick="selecionarResposta(this, ${indicePergunta}, ${i})" data-identifier="answer">
+            <div class="imagem-resposta">
                 <img src="${resposta.image}" alt="${resposta.image}">
             </div>
             <div class="cobertura"></div>
             <p class="texto-resposta">${resposta.text}</p>
-            </li>
+        </li>
             `
     }
 
