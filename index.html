@@ -22,27 +22,27 @@
         <h1>BuzzQuizz</h1>
     </header>
 
-    <main class="">
+    <main class="escondido">
 
         <!--Criar Quizz-->
 
         <section class="criar-quiz escondido">
             <p>Você não criou nenhum quizz ainda :(</p>
-            <button>Criar Quizz</button>
+            <button data-identifier="create-quizz">Criar Quizz</button>
         </section>
 
 
         <!--Seus Quizzes-->
         <div class="topo-seus-quizes escondido">
             <h2>Seus Quizzes</h2>
-            <ion-icon name="add-circle-sharp"></ion-icon>
+            <ion-icon name="add-circle-sharp" data-identifier="create-quizz"></ion-icon>
         </div>
         <ul class="seus-quizzes escondido">
         </ul>
 
         <!--Todos os quizzes-->
         <h2>Todos os Quizzes</h2>
-        <ul class="quizzes">
+        <ul class="quizzes" data-identifier="general-quizzes">
         </ul>
     </main>
 
@@ -84,10 +84,10 @@
     <section class="criacao-perguntas escondido">
         <h2>Crie suas perguntas</h2>
         <form>
-            <div class="cria-pergunta">
+            <!-- <div class="cria-pergunta">
                 <div class="topo-form">
                     <h2>Pergunta 1</h2>
-                    <img src="imagens/Vector.svg" class="escondido" alt="">
+                    <img src="imagens/Vector.svg" class="escondido" alt="" >
                 </div>
                 <div class="campo-form-pergunta">
                     <div class="definicao-pergunta">
@@ -152,14 +152,14 @@
                     <input type="text" class="url-reposta-incorreta" placeholder="URL da imagem 3" required>
                 </div>
             </div>
-            <input type="submit" class="prosseguir-niveis" value="Prosseguir para criar níveis">
+            <input type="submit" class="prosseguir-niveis" value="Prosseguir para criar níveis"> -->
         </form>
     </section>
 
     <section class="criacao-niveis escondido">
         <h2>Agora, decida os níveis!</h2>
         <form>
-            <div class="cria-nivel">
+            <!-- <div class="cria-nivel">
                 <div class="topo-form">
                     <h2>Nível 1</h2>
                     <img src="imagens/Vector.svg" class="escondido" alt="">
@@ -197,12 +197,12 @@
                     <textarea class="texto-nivel" minlength="30" placeholder="Descrição do nível"></textarea>
                 </div>
             </div>
-            <input type="submit" class="prosseguir-finalizar" value="Finalizar Quizz">
+            <input type="submit" class="prosseguir-finalizar" value="Finalizar Quizz"> -->
         </form>
     </section>
 
     <section class="fim-criacao escondido">
-        <h2>Seu quizz está pronto!</h2>
+        <!-- <h2>Seu quizz está pronto!</h2>
         <div class="quizz">
             <img src="http://www.comidacomafeto.com/wp-content/uploads/2017/04/img_3105.jpg" alt="castelos">
             <div class="cover"></div>
@@ -211,9 +211,13 @@
         <div class="botoes-fim-criacao-quizz">
             <button class="acessar-quizz">Acessar Quizz</button>
             <button class="home-fim">Voltar para home</button>
-        </div>
-
+        </div> -->
     </section>
+
+    <aside class="loading">
+        <img src="imagens/SpinLoading.svg" alt="">
+        <p>Carregando</p>
+    </aside>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script/criarQuizScript.js"></script>
