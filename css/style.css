@@ -109,6 +109,7 @@ li.quizz img {
     border-radius: 5px;
 }
 
+/* Camada de gradiente dos quizzes */
 .fim-criacao .cover,
 li .cover {
     /* background-color: black; */
