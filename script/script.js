@@ -56,7 +56,7 @@ function renderizarQuizz(quizz) {
     const imagem = quizz.image;
 
     ulInnerHTML = `
-    <li class="quizz" onclick="jogarQuizz(${id}) data-identifier="quizz-card"">
+    <li class="quizz" onclick="jogarQuizz(${id})" data-identifier="quizz-card">
         <img src="${imagem}" alt="${imagem}">
         <div class="cover"></div>
         <p>${title}</p>
