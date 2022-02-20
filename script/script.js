@@ -1,6 +1,7 @@
 /* --- Variáveis Globais --- */
 const ENDERECO_QUIZZES = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 
+let quizzID = 0;
 let respostasDoQuizz = [];
 let indicePergunta = 0;
 let quizzLevels = [];
@@ -43,6 +44,7 @@ function renderizarQuizz(quizz) {
 
 // Função chamada quando o usuário clica em quizz na tela inicial
 function jogarQuizz(id) {
+    quizzID = id;
     const promise = axios.get(`${ENDERECO_QUIZZES}/${id}`);
     promise.then((response) => {
         esconderElementosDaTelaInicial();
@@ -79,6 +81,10 @@ function carregarQuizz(quizz) {
 
     carregarTituloDoQuizz(titulo, imagem);
     questoes.forEach(carregarQuestao);
+
+    // Scroll para o início da página
+    window.scrollTo(0, 0);
+
 }
 
 // Carrega o Título e a Imagem principal do Quizz
@@ -88,8 +94,7 @@ function carregarTituloDoQuizz(titulo, imagem) {
         <div class="cover"></div>
         <img src="${imagem}" alt="${imagem}">
         <p class="titulo">${titulo}</p>
-    `
-    quizzTitulo.scrollIntoView();
+    `    
 }
 
 // Carrega cada questão do quizz na tela
@@ -167,7 +172,7 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
     // scroll para a proxima pergunta
     if (proximaPergunta != null) {
         setTimeout(() => {
-            proximaPergunta.querySelector('h3').scrollIntoView()
+            proximaPergunta.querySelector('h3').scrollIntoView();
         }, 2000);
     }
     else {
@@ -183,7 +188,7 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
     // Calcula e renderiza o resultado final caso seja a última pergunta.
     if (isUltimaPergunta(indicePergunta)) {
         console.log("É a última pergunta!!");
-        resultadoFinal = Math.round((numeroDeAcertos / numeroDePerguntas)*100);
+        resultadoFinal = Math.round((numeroDeAcertos / numeroDePerguntas) * 100);
         setTimeout(renderizarResultadoDoQuizz, 2000);
     }
 
@@ -232,13 +237,13 @@ function renderizarResultadoDoQuizz() {
 // Retornal o level final obtido pelo usuário
 function levelFinal() {
     let indiceMaiorLevel = 0;
+    let maoirPorcentagem = 0;
 
     for (let i = 0; i < quizzLevels.length; i++) {
-        if (resultadoFinal >= quizzLevels[i].minValue) {
+        if (resultadoFinal >= quizzLevels[i].minValue
+            && quizzLevels[i].minValue >= maoirPorcentagem) {
             indiceMaiorLevel = i;
-        }
-        else {
-            break;
+            maoirPorcentagem = quizzLevels[i].minValue;
         }
     }
 
@@ -257,7 +262,23 @@ function isUltimaPergunta(indicePergunta) {
     return false;
 }
 
+// Função que reinicia o quizz
+function reiniciarQuizz() {
+    jogarQuizz(quizzID);
 
+    divCompilado.classList.add("escondido");
+    resetarVariaveis();
+}
+
+// Reseta todas as variáveis referentes ao cálculo dos resultados
+function resetarVariaveis() {
+    respostasDoQuizz = [];
+    indicePergunta = 0;
+    quizzLevels = [];
+    numeroDePerguntas = 0;
+    numeroDeAcertos = 0;
+    resultadoFinal = 0;
+}
 /* --- Funções Auxiliares --- */
 // Comparador: gera um número randômico entre -0.5 e 0.5
 function comparador() {
