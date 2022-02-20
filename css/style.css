@@ -272,7 +272,6 @@ li .cover {
     margin-bottom: 5px;
 }
 
-
 .resposta img {
     width: 163px;
     /* height: 113px; */
@@ -349,6 +348,7 @@ li .cover {
     font-family: 'Roboto', sans-serif;
 }
 
+/* botoes de retorno para tela inicial */
 .home-fim,
 .home {
     width: 220px;
@@ -362,6 +362,7 @@ li .cover {
     font-family: 'Roboto', sans-serif;
 }
 
+/* layout das telas de criação de quizz */
 .inicio-criacao,
 .criacao-perguntas,
 .criacao-niveis {
@@ -535,6 +536,7 @@ input.primeira {
     margin-top: 9px;
 }
 
+/* mensagem de erro ao completar os inputs da parte de criação de quizzes */
 .mensagem-erro {
     width: 90%;
     font-size: 16px;
@@ -543,6 +545,7 @@ input.primeira {
     margin: 3px auto 0;
 }
 
+/* layout da tela de loading */
 .loading {
     width: 100%;
     min-height: 100vh;
@@ -563,11 +566,12 @@ input.primeira {
     color: var(--background--color-title);
 }
 
-
+/* configuraçõa dos palceholders */
 ::placeholder {
     color: #bababa;
 }
 
+/* tira borda dos inputs em focus */
 textarea:focus,
 input:focus {
     outline: none;
@@ -577,6 +581,7 @@ input:focus {
     background-color: #ffe9e9;
 }
 
+/* classe para esconder elementos */
 .escondido {
     display: none;
 }

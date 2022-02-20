@@ -470,3 +470,20 @@ function refreshPage() {
 function toggleTelaLoading() {
     telaLoading.classList.toggle("escondido");
 }
+
+function deletarQuizz(idQuizz, keyQuizz) {
+    const confirmacao = confirm("Você realmente deseja deletar esse quizz?");
+
+    if (confirmacao){
+        document.querySelector("main").add("escondido");
+        let promise = axios.delete(`${ENDERECO_QUIZZES}/${idQuizz}`, {
+            headers: {
+                "Secret-Key": keyQuizz
+            }
+        });
+        promise.then(repsosta => {
+            window.location.reload();
+        });
+        promise.catch(error => console.log(error.response.data));
+    }
+}
