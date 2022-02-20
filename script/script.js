@@ -9,24 +9,46 @@ let numeroDePerguntas = 0;
 let numeroDeAcertos = 0;
 let resultadoFinal = 0;
 
-const ulQuizzes = document.querySelector(".quizzes");
+const ulTodosQuizzes = document.querySelector(".quizzes");
+const ulSeusQuizzes = document.querySelector(".seus-quizzes");
 const divPerguntasdoQuizzSelecionado = document.querySelector(".corpo-quizz__perguntas");
 const divCompilado = document.querySelector(".compilado");
+
+
+let idMeusQuizzes = [];
+let usuarioTemQuizz = false;
 
 /* --- Conjunto de Funções --- */
 
 // Obtem todos os Quizzes que estão na API
 function obterTodosOsQuizzes() {
+    
+    obterIdMeusQuizzes();
+    
     const promise = axios.get(ENDERECO_QUIZZES);
 
     promise.then((response) => {
         const quizzes = response.data;
-        ulQuizzes.innerHTML = "";
+        ulTodosQuizzes.innerHTML = "";
+        ulSeusQuizzes.innerHTML = "";
         quizzes.forEach(renderizarQuizz);
+
+        mostrarCriarQuizz();
     });
 
     promise.catch((error) => { console(error.response) });
 }
+
+
+// Obtem os Id dos Quizzes presentes no localStorage
+function obterIdMeusQuizzes() {
+    idMeusQuizzes = meusQuizzes.map(() => {
+        for (let i = 0; i < meusQuizzes.length; i++) {
+            return meusQuizzes[i].id;
+        }
+    })
+}
+
 
 // Renderiza um quizz na tela inicial
 function renderizarQuizz(quizz) {
@@ -34,13 +56,41 @@ function renderizarQuizz(quizz) {
     const title = quizz.title;
     const imagem = quizz.image;
 
-    ulQuizzes.innerHTML += `
+    ulInnerHTML = `
     <li class="quizz" onclick="jogarQuizz(${id})">
         <img src="${imagem}" alt="${imagem}">
         <div class="cover"></div>
         <p>${title}</p>
     </li> `
+
+    if (idMeusQuizzes.includes(id)) {
+        ulSeusQuizzes.innerHTML += ulInnerHTML;
+
+        if (ulSeusQuizzes.classList.contains("escondido")) {
+            mostrarSeusQuizzes();
+            usuarioTemQuizz = true;
+        }
+
+        
+    }
+    else {
+        ulTodosQuizzes.innerHTML += ulInnerHTML;
+    }
 }
+
+// Mostra a seção seus quizzes e esconde a seção criar-quiz
+function mostrarSeusQuizzes () {
+    ulSeusQuizzes.classList.remove("escondido");
+    document.querySelector(".topo-seus-quizes").classList.remove("escondido");
+    document.querySelector(".criar-quiz").classList.add("escondido");
+}
+
+function mostrarCriarQuizz () {
+    if (!usuarioTemQuizz) {
+        document.querySelector(".criar-quiz").classList.remove("escondido");
+    }
+}
+
 
 // Função chamada quando o usuário clica em quizz na tela inicial
 function jogarQuizz(id) {
@@ -94,7 +144,7 @@ function carregarTituloDoQuizz(titulo, imagem) {
         <div class="cover"></div>
         <img src="${imagem}" alt="${imagem}">
         <p class="titulo">${titulo}</p>
-    `    
+    `
 }
 
 // Carrega cada questão do quizz na tela
@@ -284,6 +334,7 @@ function resetarVariaveis() {
 function comparador() {
     return Math.random() - 0.5;
 }
+
 
 /* --- Inicialização --- */
 obterTodosOsQuizzes();
