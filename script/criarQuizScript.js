@@ -116,14 +116,11 @@ formInicioCriacaoQuizz.addEventListener("submit", event => {
     abrirEdicaoPerguntas(infoBasicas.qtdPerguntas);
 });
 
-// formInicioCriacaoQuizz.addEventListener("")
-
 function invalidMsg(element) {
     element.setCustomValidity('');
 }
 
 function abrirEdicaoPerguntas(qtdPerguntas) {
-    // formCriacaoPerguntas = document.querySelector(".criacao-perguntas form");
     formCriacaoPerguntas.innerHTML = `
         <div class="cria-pergunta">
             <div class="topo-form">
@@ -235,20 +232,14 @@ function configurarButtonProsseguirParaNiveis(button) {
         const listaURLRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".url-resposta-incorreta");
         const listaTextoRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".resposta-incorreta");
 
-        // console.log(listaInputRespostasIncorretas);
         for (let i = 0; i < listaURLRespostasIncorretas.length; i++) {
             if (listaURLRespostasIncorretas[i].value) {
-                // console.log(listaInputRespostasIncorretas[i]);
                 listaTextoRespostasIncorretas[i].setAttribute("required", "");
             }
         }
         const listaInputsInvalidos = formCriacaoPerguntas.querySelectorAll(":invalid");
         const listaInputsValidos = formCriacaoPerguntas.querySelectorAll(":valid");
         criarMensagensInputsInvalidos(listaInputsInvalidos, listaInputsValidos, formCriacaoPerguntas);
-        // console.log(listaInputsInvalidos);
-        // if (listaInputsInvalidos.length !== 0) {
-        //     alert("Preencha os dados corretamente");
-        // }
     });
 
     formCriacaoPerguntas.addEventListener("submit", event => {
@@ -260,7 +251,6 @@ function configurarButtonProsseguirParaNiveis(button) {
 
 function armazenarInformacoesPerguntas() {
     const perguntas = document.querySelectorAll(".campo-form-pergunta");
-    // let elementoRespostas = null;
     let respostas = [];
     let infoPerguntaTemporario = {};
 
@@ -272,8 +262,8 @@ function armazenarInformacoesPerguntas() {
             image: pergunta.querySelector(".url-resposta-correta").value,
             isCorrectAnswer: true
         });
-        elementosRespostasIncorretas = pergunta.querySelectorAll(".resposta-incorreta");
-        elementosURLRespostasIncorretas = pergunta.querySelectorAll(".url-resposta-incorreta");
+        const elementosRespostasIncorretas = pergunta.querySelectorAll(".resposta-incorreta");
+        const elementosURLRespostasIncorretas = pergunta.querySelectorAll(".url-resposta-incorreta");
         for (let i = 0; i < elementosRespostasIncorretas.length; i++) {
             if (elementosRespostasIncorretas[i].value) {
                 respostas.push({
@@ -294,7 +284,6 @@ function armazenarInformacoesPerguntas() {
 }
 
 function abrirEdicaoNiveis(qtdNiveis) {
-    // formCriacaoNiveis = document.querySelector(".criacao-niveis form");
     formCriacaoNiveis.innerHTML = `
         <div class="cria-nivel">
             <div class="topo-form">
@@ -369,8 +358,6 @@ function configurarButtonFinalizarCriacaoQuiz(button) {
         const listaPorcentagemNiveis = formCriacaoNiveis.querySelectorAll(".porcentagem-nivel");
         let contador = 0;
         for (nivel of listaPorcentagemNiveis) {
-            // console.log(nivel.value);
-            // console.log(contador);
             if (parseInt(nivel.value) === 0){
                 contador++;
             }
@@ -385,18 +372,12 @@ function configurarButtonFinalizarCriacaoQuiz(button) {
         const listaInputsInvalidos = formCriacaoNiveis.querySelectorAll(":invalid");
         const listaInputsValidos = formCriacaoNiveis.querySelectorAll(":valid");
         criarMensagensInputsInvalidos(listaInputsInvalidos, listaInputsValidos, formCriacaoNiveis);
-        // console.log(list);
-        // if (listaInputsInvalidos.length !== 0) {
-        //     alert("Preencha os dados corretamente");
-        // }
     });
 
     formCriacaoNiveis.addEventListener("submit", event => {
         event.preventDefault();
-        // console.log("success");
         armazenarInformacoesNiveis();
         criarObjetoQuizParaEnvio();
-        console.log(quizzObjetoCriado);
         enviarQuizzParaServidor();
     })
 }
@@ -438,6 +419,8 @@ function enviarQuizzParaServidor() {
                 "Secret-Key": keyQuizz
             }
         });
+        quizzParaSerEditado = {};
+        ativacaoDeEdicao = false;
     }
     
     requisicao.then(abrirTelaFimCriacao);
@@ -476,7 +459,6 @@ function abrirTelaFimCriacao(resposta) {
     meusQuizzSerializado = JSON.stringify(meusQuizzes);
     localStorage.setItem("quizzes", meusQuizzSerializado);
 
-    // document.querySelector(".criacao-niveis").classList.add("escondido");
 
     const telaFimCriacao = document.querySelector(".fim-criacao");
     telaFimCriacao.innerHTML = `
@@ -515,7 +497,7 @@ function deletarQuizz(idQuizz) {
     const confirmacao = confirm("Você realmente deseja deletar esse quizz?");
 
     if (confirmacao){
-        document.querySelector("main").add("escondido");
+        document.querySelector("main").classList.add("escondido");
         let promise = axios.delete(`${ENDERECO_QUIZZES}/${idQuizz}`, {
             headers: {
                 "Secret-Key": quizzKey
@@ -549,21 +531,4 @@ function acharKeyQuizz(id) {
             return quizz.key;
         }
     }
-}
-
-function editar() {
-    let promise = axios.put(`${ENDERECO_QUIZZES}/${meusQuizzes[0].id}`, {
-        title: QUIZZ.title,
-        image: QUIZZ.image,
-        questions: QUIZZ.questions,
-        levels: QUIZZ.levels,
-    }, {
-        headers: {
-            "Secret-Key": meusQuizzes[0].key    
-        }
-    });
-    promise.then(answer => console.log(answer.data));
-    promise.catch(error => console.log(error.response.data));
-
-
 }
