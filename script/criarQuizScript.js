@@ -1,5 +1,4 @@
-// const ENDERECO_POST_QUIZZES = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
-
+// Variáveis Globais
 const criarQuizzButton = document.querySelector(".criar-quiz button");
 const criarQuizzIcon = document.querySelector(".topo-seus-quizes ion-icon");
 const formInicioCriacaoQuizz = document.querySelector(".inicio-criacao form");
@@ -22,6 +21,8 @@ let meusQuizzSerializado = localStorage.getItem("quizzes");
 if (meusQuizzSerializado !== null){
     meusQuizzes = JSON.parse(meusQuizzSerializado);
 }
+
+// Conjunto de funções 
 
 function eliminarBalaoDialogoErroForms(form) {
     form.addEventListener("invalid", event => {
