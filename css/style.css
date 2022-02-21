@@ -19,7 +19,7 @@ body {
 }
 
 /* Cursor pointer nos botões, ion-icons e inputs do tipo submit */
-button:hover, ion-icon:hover, input[type="submit"]{
+button:hover, ion-icon:hover, input[type="submit"] {
     cursor: pointer;
 }
 
@@ -100,7 +100,7 @@ li.quizz {
     background-size: cover;
     margin-bottom: 14px;
     overflow: hidden;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 li.quizz img {
@@ -112,7 +112,7 @@ li.quizz img {
 .fim-criacao .cover,
 li .cover {
     /* background-color: black; */
-    background-image: linear-gradient(to bottom, transparent , #000000);
+    background-image: linear-gradient(to bottom, transparent, #000000);
     position: absolute;
     top: 0;
     left: 0;
@@ -177,7 +177,7 @@ li .cover {
 
 .corpo-quizz .cover {
     border-radius: 0px;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) , rgba(0, 0, 0, 0.6));
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
     position: absolute;
     top: 0;
     left: 0;
@@ -219,7 +219,7 @@ li .cover {
     margin-bottom: 28px;
 }
 
-.pergunta h3{
+.pergunta h3 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -468,7 +468,7 @@ form input {
     margin: 0 auto 12px;
 }
 
-.topo-form h2{
+.topo-form h2 {
     margin: 0;
 }
 
@@ -576,6 +576,125 @@ input:focus {
     background-color: #ffe9e9;
 }
 
+/* --- Utilitario --- */
 .escondido {
     display: none;
+}
+
+/* --- Layout Desktop --- */
+@media (min-width: 1100px) {
+
+    /* Tela Inicial */
+    main {
+        width: 1050px;
+        margin: 146px auto 0;
+    }
+
+    .criar-quiz p {
+        width: 250px;
+    }
+
+    h2 {
+        margin: 50px 0px 12px;
+    }
+
+    ul.quizzes, ul.seus-quizzes {
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+
+    li.quizz {
+        width: 340px;
+        height: 180px;
+        margin-left: 14px;
+    }
+
+    ul.quizzes li.quizz:nth-child(3n+1),
+    ul.seus-quizzes li.quizz:nth-child(3n+1) {
+        margin-left: 0px;
+    }
+
+    .topo-seus-quizes {
+        justify-content: flex-start;
+    }
+
+    .topo-seus-quizes ion-icon {
+        margin-left: 17px;
+    }
+
+    /* Tela Quizz */
+    .questoes {
+        width: 760px;
+        margin: 0 auto;
+        margin-top: 42px;
+    }
+
+    .pergunta {
+        margin-bottom: 42px;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
+
+    .pergunta h3 {
+        width: 690px;
+        height: 138px;
+        font-size: 23px;
+        line-height: 27px;
+    }
+
+    .respostas {
+        width: 690px;
+    }
+
+    .resposta {
+        width: fit-content;
+        height: fit-content;
+        
+    }
+
+    .imagem-resposta {
+        width: 330px;
+        height: 175px;
+        margin-bottom: 10px;
+    }
+
+    .resposta img {
+        width: 330px;
+        height: 175px;
+    }
+
+    .texto-resposta {
+        font-size: 20px;
+        line-height: 23px;
+    }
+
+    .compilado {
+        margin-bottom: 57px;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
+
+    .compilado h3 {
+        width: 690px;
+        height: 99px;
+        font-size: 23px;
+        line-height: 27px;
+    }
+
+    .mensagem {
+        width: 690px;
+        display: flex;
+    }
+
+    .mensagem img {
+        width: 364px;
+        height: 273px;
+    }
+
+    .mensagem p {
+        font-size: 19px;
+        line-height: 25px;
+        margin-left: 21px;
+    }
+
+
 }

@@ -22,9 +22,9 @@ let usuarioTemQuizz = false;
 
 // Obtem todos os Quizzes que estão na API
 function obterTodosOsQuizzes() {
-    
+
     obterIdMeusQuizzes();
-    
+
     const promise = axios.get(ENDERECO_QUIZZES);
 
     promise.then((response) => {
@@ -70,7 +70,7 @@ function renderizarQuizz(quizz) {
             usuarioTemQuizz = true;
         }
 
-        
+
     }
     else {
         ulTodosQuizzes.innerHTML += ulInnerHTML;
@@ -78,13 +78,13 @@ function renderizarQuizz(quizz) {
 }
 
 // Mostra a seção seus quizzes e esconde a seção criar-quiz
-function mostrarSeusQuizzes () {
+function mostrarSeusQuizzes() {
     ulSeusQuizzes.classList.remove("escondido");
     document.querySelector(".topo-seus-quizes").classList.remove("escondido");
     document.querySelector(".criar-quiz").classList.add("escondido");
 }
 
-function mostrarCriarQuizz () {
+function mostrarCriarQuizz() {
     if (!usuarioTemQuizz) {
         document.querySelector(".criar-quiz").classList.remove("escondido");
     }
