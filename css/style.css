@@ -646,7 +646,7 @@ input:focus {
     }
 
     .resposta {
-        width: fit-content;
+        width: 330px;
         height: fit-content;
 
     }

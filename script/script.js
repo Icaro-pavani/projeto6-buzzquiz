@@ -5,6 +5,7 @@ let quizzID = 0;
 let respostasDoQuizz = [];
 let indicePergunta = 0;
 let quizzLevels = [];
+let perguntasRespondidas = null;
 let numeroDePerguntas = 0;
 let numeroDeAcertos = 0;
 let numeroDeRespostasDadas = 0;
@@ -130,6 +131,7 @@ function carregarQuizz(quizz) {
 
     quizzLevels = quizz.levels;
     numeroDePerguntas = questoes.length;
+    perguntasRespondidas = new Array(numeroDePerguntas).fill(false);
 
     carregarTituloDoQuizz(titulo, imagem);
     questoes.forEach(carregarQuestao);
@@ -208,10 +210,10 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
     const proximaPergunta = divPergunta.nextElementSibling;
 
     // Verifica se a pergunta já foi respondida
-    if (!divPergunta.classList.contains("pergunta-respondida")) {
-        
+    if (!divPergunta.classList.contains("pergunta-respondida") && perguntaAnteriorFoiRespondida(indicePergunta)) {
+
         numeroDeRespostasDadas++;
-        
+
         divPergunta.classList.add("pergunta-respondida");
         // Marca a resposta escolhida
         liRespostaEscolhida.classList.add("resposta-escolhida");
@@ -228,7 +230,7 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
                 proximaPergunta.querySelector('h3').scrollIntoView({ block: "center", inline: "center" });
             }, 2000);
         }
-        
+
         // Avalia se o resultado é correto ou não
         const respostaSelecionada = respostasDoQuizz[indicePergunta][indiceResposta];
         if (respostaSelecionada.isCorrectAnswer) {
@@ -242,6 +244,18 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
             setTimeout(renderizarResultadoDoQuizz, 2000);
         }
     }
+    else {
+        console.log("Não foi possível selecionar a pergunta!");
+    }
+}
+
+function perguntaAnteriorFoiRespondida(indicePergunta) {
+    if (indicePergunta === 0 || perguntasRespondidas[indicePergunta - 1]) {
+        perguntasRespondidas[indicePergunta] = true;
+        return true;
+    }
+    alert("Não foi possível selecioar a resposta! Respoda a(s) pergunta(s) anterior(es)!");
+    return false;
 }
 
 // Adiciona as resposta não escolhida uma opacidade menor (classe respota-nao-escolhida)
