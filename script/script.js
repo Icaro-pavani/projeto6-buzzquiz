@@ -63,7 +63,7 @@ function renderizarQuizz(quizz) {
 
     if (idMeusQuizzes.includes(id)) {
         ulSeusQuizzes.innerHTML += `
-        <li class="quizz" onclick="jogarQuizz(${id})">
+        <li class="quizz" onclick="jogarQuizz(${id});" data-identifier="quizz-card">
             <img src="${imagem}" alt="${imagem}">
             <div class="cover"></div>
             <p>${title}</p>
@@ -151,7 +151,7 @@ function carregarTituloDoQuizz(titulo, imagem) {
         <div class="cover"></div>
         <img src="${imagem}" alt="${imagem}">
         <p class="titulo">${titulo}</p>
-    `
+    `;
 }
 
 
@@ -197,7 +197,7 @@ function carregarQuestao(questao) {
             <div class="cobertura"></div>
             <p class="texto-resposta">${resposta.text}</p>
         </li>
-            `
+            `;
     }
     indicePergunta += 1;
 }
