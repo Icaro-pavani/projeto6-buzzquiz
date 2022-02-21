@@ -15,6 +15,8 @@ let perguntasCriadas = [];
 let niveisCriados = [];
 let quizzObjetoCriado = {};
 let meusQuizzes = [];
+let quizzParaSerEditado = {};
+let ativacaoDeEdicao = false;
 
 let meusQuizzSerializado = localStorage.getItem("quizzes");
 if (meusQuizzSerializado !== null){
@@ -74,40 +76,25 @@ function iniciarCriarQuizz() {
         <input type="submit" class="prosseguir-perguntas" name="prosseguir-perguntas" value="Prosseguir pra criar perguntas">`;
     document.querySelector(".inicio-criacao").classList.remove("escondido");
 
+    if (ativacaoDeEdicao){
+        preencheValoresInicioCriacao();
+    }
+
     prosseguirParaPerguntasButton = document.querySelector(".prosseguir-perguntas");
     eliminarBalaoDialogoErroForms(formInicioCriacaoQuizz);
     prosseguirParaPerguntasButton.addEventListener("click", () => {
         const listaInputsInvalidos = formInicioCriacaoQuizz.querySelectorAll(":invalid");
         const listaInputsValidos = formInicioCriacaoQuizz.querySelectorAll(":valid");
-        // console.log(list);
-        // if (listaInputsInvalidos.length !== 0) {
-        //     alert("Preencha os dados corretamente");
-        // }
 
         criarMensagensInputsInvalidos(listaInputsInvalidos, listaInputsValidos, formInicioCriacaoQuizz);
-        // let mensagemErro;
-        // // Esconder mensagens de erros existentes
-        // const textosDeErros = formInicioCriacaoQuizz.querySelectorAll("p");
-        // for (let i = 0; i < textosDeErros.length; i++){
-        //     textosDeErros[i].classList.add("escondido");
-        // }
-
-        // if (listaInputsValidos.length > 1){
-        //     for (let i = 0; i < listaInputsValidos.length - 1; i++){
-        //         listaInputsValidos[i].style.backgroundColor = "#fff";
-        //         mensagemErro = listaInputsValidos[i].nextElementSibling;
-        //         mensagemErro.classList.add("escondido");
-        //     }
-        // }
-
-        // // Adiciona as mensagens de erro de preenchimento abaixo dos inputs
-        // for (let i = 0; i < listaInputsInvalidos.length; i++) {
-        //     listaInputsInvalidos[i].style.backgroundColor = "#ffe9e9";
-        //     mensagemErro = listaInputsInvalidos[i].nextElementSibling;
-        //     mensagemErro.innerHTML = listaInputsInvalidos[i].validationMessage;
-        //     mensagemErro.classList.remove("escondido");
-        // }
     });
+}
+
+function preencheValoresInicioCriacao() {
+    formInicioCriacaoQuizz.querySelector(".nome-titulo").value = quizzParaSerEditado.title;
+    formInicioCriacaoQuizz.querySelector(".url").value = quizzParaSerEditado.image;
+    formInicioCriacaoQuizz.querySelector(".quantidade-perguntas").value = quizzParaSerEditado.questions.length;
+    formInicioCriacaoQuizz.querySelector(".quantidade-niveis").value = quizzParaSerEditado.levels.length;
 }
 
 criarQuizzButton.addEventListener("click", iniciarCriarQuizz);
@@ -129,14 +116,11 @@ formInicioCriacaoQuizz.addEventListener("submit", event => {
     abrirEdicaoPerguntas(infoBasicas.qtdPerguntas);
 });
 
-// formInicioCriacaoQuizz.addEventListener("")
-
 function invalidMsg(element) {
     element.setCustomValidity('');
 }
 
 function abrirEdicaoPerguntas(qtdPerguntas) {
-    // formCriacaoPerguntas = document.querySelector(".criacao-perguntas form");
     formCriacaoPerguntas.innerHTML = `
         <div class="cria-pergunta">
             <div class="topo-form">
@@ -147,7 +131,7 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
                 <div class="definicao-pergunta">
                     <input type="text" class="texto-pergunta" name="texto-pergunta" minlength="20" placeholder="Texto da pergunta" required>
                     <p class="mensagem-erro escondido"></p>
-                    <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" placeholder="Cor de fundo da pergunta" required>
+                    <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6})$" placeholder="Cor de fundo da pergunta" required>
                     <p class="mensagem-erro escondido"></p>
                 </div>
                 <h3>Resposta correta</h3>
@@ -182,7 +166,7 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
                     <div class="definicao-pergunta">
                         <input type="text" class="texto-pergunta" name="texto-pergunta" minlength="20" placeholder="Texto da pergunta" required>
                         <p class="mensagem-erro escondido"></p>
-                        <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" placeholder="Cor de fundo da pergunta" required>
+                        <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6})$" placeholder="Cor de fundo da pergunta" required>
                         <p class="mensagem-erro escondido"></p>
                     </div>
                     <h3>Resposta correta</h3>
@@ -208,6 +192,10 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
     }
     formCriacaoPerguntas.innerHTML += `<input type="submit" class="prosseguir-niveis" name="prosseguir-niveis" value="Prosseguir pra criar níveis">`;
 
+    if(ativacaoDeEdicao) {
+        preencherValoresPerguntas();
+    }
+
     const elementoCriacaoPerguntas = document.querySelector(".criacao-perguntas");
     elementoCriacaoPerguntas.classList.remove("escondido");
     const expandirEditorPerguntasButtons = document.querySelectorAll(".criacao-perguntas img");
@@ -222,26 +210,36 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
     configurarButtonProsseguirParaNiveis(prosseguirParaNiveisButton);
 }
 
+function preencherValoresPerguntas() {
+    const perguntas = formCriacaoPerguntas.querySelectorAll(".cria-pergunta");
+    for (let i = 0; i < quizzParaSerEditado.questions.length; i++) {
+        perguntas[i].querySelector(".texto-pergunta").value = quizzParaSerEditado.questions[i].title;
+        perguntas[i].querySelector(".cor-fundo").value = quizzParaSerEditado.questions[i].color;
+        perguntas[i].querySelector(".resposta-correta").value = quizzParaSerEditado.questions[i].answers[0].text;
+        perguntas[i].querySelector(".url-resposta-correta").value = quizzParaSerEditado.questions[i].answers[0].image;
+        repostasIncorretas = perguntas[i].querySelectorAll(".resposta-incorreta");
+        URLRespostasIncorretas = perguntas[i].querySelectorAll(".url-resposta-incorreta");
+        for (let j = 1; j < quizzParaSerEditado.questions[i].answers.length; j++){
+            repostasIncorretas[j - 1].value = quizzParaSerEditado.questions[i].answers[j].text;
+            URLRespostasIncorretas[j - 1].value = quizzParaSerEditado.questions[i].answers[j].image;
+        }
+    }
+}
+
 function configurarButtonProsseguirParaNiveis(button) {
     eliminarBalaoDialogoErroForms(formCriacaoPerguntas);
     button.addEventListener("click", () => {
         const listaURLRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".url-resposta-incorreta");
         const listaTextoRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".resposta-incorreta");
 
-        // console.log(listaInputRespostasIncorretas);
         for (let i = 0; i < listaURLRespostasIncorretas.length; i++) {
             if (listaURLRespostasIncorretas[i].value) {
-                // console.log(listaInputRespostasIncorretas[i]);
                 listaTextoRespostasIncorretas[i].setAttribute("required", "");
             }
         }
         const listaInputsInvalidos = formCriacaoPerguntas.querySelectorAll(":invalid");
         const listaInputsValidos = formCriacaoPerguntas.querySelectorAll(":valid");
         criarMensagensInputsInvalidos(listaInputsInvalidos, listaInputsValidos, formCriacaoPerguntas);
-        // console.log(listaInputsInvalidos);
-        // if (listaInputsInvalidos.length !== 0) {
-        //     alert("Preencha os dados corretamente");
-        // }
     });
 
     formCriacaoPerguntas.addEventListener("submit", event => {
@@ -253,7 +251,6 @@ function configurarButtonProsseguirParaNiveis(button) {
 
 function armazenarInformacoesPerguntas() {
     const perguntas = document.querySelectorAll(".campo-form-pergunta");
-    // let elementoRespostas = null;
     let respostas = [];
     let infoPerguntaTemporario = {};
 
@@ -265,8 +262,8 @@ function armazenarInformacoesPerguntas() {
             image: pergunta.querySelector(".url-resposta-correta").value,
             isCorrectAnswer: true
         });
-        elementosRespostasIncorretas = pergunta.querySelectorAll(".resposta-incorreta");
-        elementosURLRespostasIncorretas = pergunta.querySelectorAll(".url-resposta-incorreta");
+        const elementosRespostasIncorretas = pergunta.querySelectorAll(".resposta-incorreta");
+        const elementosURLRespostasIncorretas = pergunta.querySelectorAll(".url-resposta-incorreta");
         for (let i = 0; i < elementosRespostasIncorretas.length; i++) {
             if (elementosRespostasIncorretas[i].value) {
                 respostas.push({
@@ -287,7 +284,6 @@ function armazenarInformacoesPerguntas() {
 }
 
 function abrirEdicaoNiveis(qtdNiveis) {
-    // formCriacaoNiveis = document.querySelector(".criacao-niveis form");
     formCriacaoNiveis.innerHTML = `
         <div class="cria-nivel">
             <div class="topo-form">
@@ -328,6 +324,10 @@ function abrirEdicaoNiveis(qtdNiveis) {
     formCriacaoNiveis.innerHTML += `<input type="submit" class="prosseguir-finalizar" value="Finalizar Quizz">`;
     document.querySelector(".criacao-perguntas").classList.add("escondido");
 
+    if(ativacaoDeEdicao) {
+        preencherValoresNiveis();
+    }
+
     const elementoCriacaoNiveis = document.querySelector(".criacao-niveis");
     elementoCriacaoNiveis.classList.remove("escondido");
     const expandirEditorNiveisButtons = document.querySelectorAll(".criacao-niveis img");
@@ -342,14 +342,22 @@ function abrirEdicaoNiveis(qtdNiveis) {
     configurarButtonFinalizarCriacaoQuiz(finalizarCriacaoQuizzButton);
 }
 
+function preencherValoresNiveis() {
+    const niveis = formCriacaoNiveis.querySelectorAll(".cria-nivel");
+    for (let i = 0; i < quizzParaSerEditado.levels.length; i++) {
+        niveis[i].querySelector(".titulo-nivel").value = quizzParaSerEditado.levels[i].title;
+        niveis[i].querySelector(".porcentagem-nivel").value = quizzParaSerEditado.levels[i].minValue;
+        niveis[i].querySelector(".url-nivel").value = quizzParaSerEditado.levels[i].image;
+        niveis[i].querySelector(".texto-nivel").value = quizzParaSerEditado.levels[i].text;
+    }
+}
+
 function configurarButtonFinalizarCriacaoQuiz(button) {
     eliminarBalaoDialogoErroForms(formCriacaoNiveis);
     button.addEventListener("click", () => {
         const listaPorcentagemNiveis = formCriacaoNiveis.querySelectorAll(".porcentagem-nivel");
         let contador = 0;
         for (nivel of listaPorcentagemNiveis) {
-            // console.log(nivel.value);
-            // console.log(contador);
             if (parseInt(nivel.value) === 0){
                 contador++;
             }
@@ -364,18 +372,12 @@ function configurarButtonFinalizarCriacaoQuiz(button) {
         const listaInputsInvalidos = formCriacaoNiveis.querySelectorAll(":invalid");
         const listaInputsValidos = formCriacaoNiveis.querySelectorAll(":valid");
         criarMensagensInputsInvalidos(listaInputsInvalidos, listaInputsValidos, formCriacaoNiveis);
-        // console.log(list);
-        // if (listaInputsInvalidos.length !== 0) {
-        //     alert("Preencha os dados corretamente");
-        // }
     });
 
     formCriacaoNiveis.addEventListener("submit", event => {
         event.preventDefault();
-        // console.log("success");
         armazenarInformacoesNiveis();
         criarObjetoQuizParaEnvio();
-        console.log(quizzObjetoCriado);
         enviarQuizzParaServidor();
     })
 }
@@ -407,7 +409,19 @@ function criarObjetoQuizParaEnvio() {
 function enviarQuizzParaServidor() {
     document.querySelector(".criacao-niveis").classList.add("escondido");
     toggleTelaLoading();
-    const requisicao = axios.post(ENDERECO_QUIZZES, quizzObjetoCriado);
+    let requisicao;
+    if (!ativacaoDeEdicao){
+        requisicao = axios.post(ENDERECO_QUIZZES, quizzObjetoCriado);
+    } else {
+        const keyQuizz = acharKeyQuizz(quizzParaSerEditado.id);
+        requisicao = axios.put(`${ENDERECO_QUIZZES}/${quizzParaSerEditado.id}`, quizzObjetoCriado, {
+            headers: {
+                "Secret-Key": keyQuizz
+            }
+        });
+        quizzParaSerEditado = {};
+        ativacaoDeEdicao = false;
+    }
     
     requisicao.then(abrirTelaFimCriacao);
     requisicao.catch(mostrarMensagemErro);
@@ -445,7 +459,6 @@ function abrirTelaFimCriacao(resposta) {
     meusQuizzSerializado = JSON.stringify(meusQuizzes);
     localStorage.setItem("quizzes", meusQuizzSerializado);
 
-    // document.querySelector(".criacao-niveis").classList.add("escondido");
 
     const telaFimCriacao = document.querySelector(".fim-criacao");
     telaFimCriacao.innerHTML = `
@@ -469,4 +482,53 @@ function refreshPage() {
 
 function toggleTelaLoading() {
     telaLoading.classList.toggle("escondido");
+}
+
+function deletarQuizz(idQuizz) {
+    const quizzKey = acharKeyQuizz(idQuizz);
+    // for (quizz of meusQuizzes){
+    //     if (quizz.id === idQuizz){
+    //         quizzKey = quizz.key;
+    //         break;
+    //     }
+    // }
+
+    console.log(quizzKey);
+    const confirmacao = confirm("Você realmente deseja deletar esse quizz?");
+
+    if (confirmacao){
+        document.querySelector("main").classList.add("escondido");
+        let promise = axios.delete(`${ENDERECO_QUIZZES}/${idQuizz}`, {
+            headers: {
+                "Secret-Key": quizzKey
+            }
+        });
+        promise.then(resposta => {
+            window.location.reload();
+        });
+        promise.catch(error => console.log(error.response.data));
+    }
+}
+
+function editarQuizz(idQuizz) {
+    ativacaoDeEdicao = true;
+    toggleTelaLoading();
+    esconderElementosDaTelaInicial();
+    const promise = axios.get(`${ENDERECO_QUIZZES}/${idQuizz}`);
+    promise.then(iniciarTelaEdicaoQuizz);
+    promise.catch(erro => console.log(erro.response.data));    
+}
+
+function iniciarTelaEdicaoQuizz(resposta) {
+    quizzParaSerEditado = resposta.data;
+    toggleTelaLoading();
+    iniciarCriarQuizz();
+}
+
+function acharKeyQuizz(id) {
+    for (quizz of meusQuizzes){
+        if (quizz.id === id){
+            return quizz.key;
+        }
+    }
 }
