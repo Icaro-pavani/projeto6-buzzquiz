@@ -7,6 +7,7 @@ let indicePergunta = 0;
 let quizzLevels = [];
 let numeroDePerguntas = 0;
 let numeroDeAcertos = 0;
+let numeroDeRespostasDadas = 0;
 let resultadoFinal = 0;
 
 const ulTodosQuizzes = document.querySelector(".quizzes");
@@ -208,6 +209,9 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
 
     // Verifica se a pergunta já foi respondida
     if (!divPergunta.classList.contains("pergunta-respondida")) {
+        
+        numeroDeRespostasDadas++;
+        
         divPergunta.classList.add("pergunta-respondida");
         // Marca a resposta escolhida
         liRespostaEscolhida.classList.add("resposta-escolhida");
@@ -224,10 +228,7 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
                 proximaPergunta.querySelector('h3').scrollIntoView({ block: "center", inline: "center" });
             }, 2000);
         }
-        else {
-            console.log("Não há mais perguntas!!");
-        }
-
+        
         // Avalia se o resultado é correto ou não
         const respostaSelecionada = respostasDoQuizz[indicePergunta][indiceResposta];
         if (respostaSelecionada.isCorrectAnswer) {
@@ -235,7 +236,7 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
         }
 
         // Calcula e renderiza o resultado final caso seja a última pergunta.
-        if (isUltimaPergunta(indicePergunta)) {
+        if (isUltimaPergunta()) {
             console.log("É a última pergunta!!");
             resultadoFinal = Math.round((numeroDeAcertos / numeroDePerguntas) * 100);
             setTimeout(renderizarResultadoDoQuizz, 2000);
@@ -304,8 +305,8 @@ function levelFinal() {
 }
 
 // Avalia se é a ultima pergunta do quizz
-function isUltimaPergunta(indicePergunta) {
-    if ((indicePergunta + 1) === numeroDePerguntas) {
+function isUltimaPergunta() {
+    if (numeroDeRespostasDadas === numeroDePerguntas) {
         return true;
     }
 
@@ -329,6 +330,7 @@ function resetarVariaveis() {
     numeroDePerguntas = 0;
     numeroDeAcertos = 0;
     resultadoFinal = 0;
+    numeroDeRespostasDadas = 0;
 }
 /* --- Funções Auxiliares --- */
 // Comparador: gera um número randômico entre -0.5 e 0.5
