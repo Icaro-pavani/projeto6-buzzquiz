@@ -37,7 +37,7 @@
             <h2>Seus Quizzes</h2>
             <ion-icon name="add-circle-sharp" data-identifier="create-quizz"></ion-icon>
         </div>
-        <ul class="seus-quizzes escondido">
+        <ul class="seus-quizzes escondido" data-identifier="user-quizzes">
         </ul>
 
         <!--Todos os quizzes-->
@@ -58,12 +58,12 @@
             <div class="corpo-quizz__perguntas">
             </div>
 
-            <div class="compilado escondido">
+            <div class="compilado escondido" data-identifier="quizz-result">
             </div>
 
             <div class="botoes-fim-quizz">
                 <button class="reiniciar-quizz" onclick="reiniciarQuizz();">Reiniciar Quizz</button>
-                <button class="home" onclick="refreshPage();">Voltar para home</button>
+                <button class="home" onclick="refreshPage();">Voltar pra home</button>
             </div>
         </section>
     </article>
