@@ -60,10 +60,19 @@ function renderizarQuizz(quizz) {
         <img src="${imagem}" alt="${imagem}">
         <div class="cover"></div>
         <p>${title}</p>
-    </li> `
+    </li> `;
 
     if (idMeusQuizzes.includes(id)) {
-        ulSeusQuizzes.innerHTML += ulInnerHTML;
+        ulSeusQuizzes.innerHTML += `
+        <li class="quizz" onclick="jogarQuizz(${id})">
+            <img src="${imagem}" alt="${imagem}">
+            <div class="cover"></div>
+            <p>${title}</p>
+            <div class="opcao-quizz">
+                <img src="imagens/edit.svg" onclick="deletarQuizz(${id})">
+                <img src="imagens/trash.svg" onclick="editarQuizz(${id})">
+            </div>
+        </li> `;
 
         if (ulSeusQuizzes.classList.contains("escondido")) {
             mostrarSeusQuizzes();

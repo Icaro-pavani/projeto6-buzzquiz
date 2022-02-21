@@ -147,7 +147,7 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
                 <div class="definicao-pergunta">
                     <input type="text" class="texto-pergunta" name="texto-pergunta" minlength="20" placeholder="Texto da pergunta" required>
                     <p class="mensagem-erro escondido"></p>
-                    <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" placeholder="Cor de fundo da pergunta" required>
+                    <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6})$" placeholder="Cor de fundo da pergunta" required>
                     <p class="mensagem-erro escondido"></p>
                 </div>
                 <h3>Resposta correta</h3>
@@ -182,7 +182,7 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
                     <div class="definicao-pergunta">
                         <input type="text" class="texto-pergunta" name="texto-pergunta" minlength="20" placeholder="Texto da pergunta" required>
                         <p class="mensagem-erro escondido"></p>
-                        <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" placeholder="Cor de fundo da pergunta" required>
+                        <input type="text" class="cor-fundo" name="cor-fundo" pattern="^#([A-Fa-f0-9]{6})$" placeholder="Cor de fundo da pergunta" required>
                         <p class="mensagem-erro escondido"></p>
                     </div>
                     <h3>Resposta correta</h3>
@@ -471,7 +471,7 @@ function toggleTelaLoading() {
     telaLoading.classList.toggle("escondido");
 }
 
-function deletarQuizz(idQuizz, keyQuizz) {
+function deletarQuizz(idQuizz) {
     const confirmacao = confirm("Você realmente deseja deletar esse quizz?");
 
     if (confirmacao){
@@ -481,7 +481,7 @@ function deletarQuizz(idQuizz, keyQuizz) {
                 "Secret-Key": keyQuizz
             }
         });
-        promise.then(repsosta => {
+        promise.then(resposta => {
             window.location.reload();
         });
         promise.catch(error => console.log(error.response.data));
