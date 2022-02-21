@@ -190,8 +190,6 @@ function carregarQuestao(questao) {
         </li>
             `
     }
-
-    
     indicePergunta += 1;
 }
 
@@ -229,7 +227,6 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
 
         // Calcula e renderiza o resultado final caso seja a última pergunta.
         if (isUltimaPergunta()) {
-            console.log("É a última pergunta!!");
             resultadoFinal = Math.round((numeroDeAcertos / numeroDePerguntas) * 100);
             setTimeout(renderizarResultadoDoQuizz, 2000);
         }
@@ -318,6 +315,7 @@ function isUltimaPergunta() {
 function reiniciarQuizz() {
     divCompilado.classList.add("escondido");
     divBotoesFimQuizz.classList.add("escondido");
+    document.querySelector(".corpo-quizz").classList.add("escondido");
     jogarQuizz(quizzID);
 
     resetarVariaveis();
