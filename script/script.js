@@ -316,10 +316,10 @@ function isUltimaPergunta(indicePergunta) {
 
 // Função que reinicia o quizz
 function reiniciarQuizz() {
-    jogarQuizz(quizzID);
-
     divCompilado.classList.add("escondido");
     divBotoesFimQuizz.classList.add("escondido");
+    jogarQuizz(quizzID);
+
     resetarVariaveis();
 }
 
