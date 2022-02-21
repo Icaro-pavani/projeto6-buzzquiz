@@ -486,12 +486,6 @@ function toggleTelaLoading() {
 
 function deletarQuizz(idQuizz) {
     const quizzKey = acharKeyQuizz(idQuizz);
-    // for (quizz of meusQuizzes){
-    //     if (quizz.id === idQuizz){
-    //         quizzKey = quizz.key;
-    //         break;
-    //     }
-    // }
 
     console.log(quizzKey);
     const confirmacao = confirm("Você realmente deseja deletar esse quizz?");
