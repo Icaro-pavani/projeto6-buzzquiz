@@ -225,8 +225,13 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
         // scroll para a proxima pergunta
         if (proximaPergunta != null) {
             setTimeout(() => {
-                proximaPergunta.querySelector('h3').scrollIntoView({ block: "center", inline: "center" });
-            }, 2000);
+                //proximaPergunta.querySelector('h3').scrollIntoView({ block: "center", inline: "center" });
+                const distanciaAteTopo = proximaPergunta.offsetTop;
+                window.scrollTo(0, distanciaAteTopo - 111)
+                }
+            
+            , 2000);
+            
         }
 
         const respostaSelecionada = respostasDoQuizz[indicePergunta][indiceResposta];
@@ -289,7 +294,8 @@ function renderizarResultadoDoQuizz() {
 
     divCompilado.classList.remove("escondido");
     divBotoesFimQuizz.classList.remove("escondido");
-    divBotoesFimQuizz.scrollIntoView();
+    window.scrollTo(0, document.body.scrollHeight);
+    //divBotoesFimQuizz.scrollIntoView();
 }
 
 
