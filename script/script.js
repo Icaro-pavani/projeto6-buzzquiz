@@ -13,7 +13,7 @@ const ulTodosQuizzes = document.querySelector(".quizzes");
 const ulSeusQuizzes = document.querySelector(".seus-quizzes");
 const divPerguntasdoQuizzSelecionado = document.querySelector(".corpo-quizz__perguntas");
 const divCompilado = document.querySelector(".compilado");
-
+const divBotoesFimQuizz = document.querySelector(".botoes-fim-quizz");
 
 let idMeusQuizzes = [];
 let usuarioTemQuizz = false;
@@ -283,6 +283,7 @@ function renderizarResultadoDoQuizz() {
 
     divCompilado.classList.remove("escondido");
     divCompilado.querySelector('h3').scrollIntoView();
+    divBotoesFimQuizz.classList.remove("escondido");
 }
 
 // Retornal o level final obtido pelo usuário
@@ -318,6 +319,7 @@ function reiniciarQuizz() {
     jogarQuizz(quizzID);
 
     divCompilado.classList.add("escondido");
+    divBotoesFimQuizz.classList.add("escondido");
     resetarVariaveis();
 }
 
