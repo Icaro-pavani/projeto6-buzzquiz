@@ -315,9 +315,9 @@ function isUltimaPergunta(indicePergunta) {
 
 // Função que reinicia o quizz
 function reiniciarQuizz() {
+    divCompilado.classList.add("escondido");
     jogarQuizz(quizzID);
 
-    divCompilado.classList.add("escondido");
     resetarVariaveis();
 }
 
