@@ -206,7 +206,7 @@ function abrirEdicaoPerguntas(qtdPerguntas) {
                 </div>
             </div>`;
     }
-    formCriacaoPerguntas.innerHTML += `<input type="submit" class="prosseguir-niveis" name="prosseguir-niveis" value="Prosseguir para criar níveis">`;
+    formCriacaoPerguntas.innerHTML += `<input type="submit" class="prosseguir-niveis" name="prosseguir-niveis" value="Prosseguir pra criar níveis">`;
 
     const elementoCriacaoPerguntas = document.querySelector(".criacao-perguntas");
     elementoCriacaoPerguntas.classList.remove("escondido");
@@ -457,7 +457,7 @@ function abrirTelaFimCriacao(resposta) {
         </div>
         <div class="botoes-fim-criacao-quizz">
             <button class="acessar-quizz" onclick="jogarQuizz(${objetoResposta.id});">Acessar Quizz</button>
-            <button class="home-fim" onclick="refreshPage();">Voltar para home</button>
+            <button class="home-fim" onclick="refreshPage();">Voltar pra home</button>
         </div>`;
     telaFimCriacao.classList.remove("escondido");
     toggleTelaLoading();
