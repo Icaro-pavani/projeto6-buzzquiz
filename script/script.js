@@ -164,8 +164,8 @@ function carregarQuestao(questao) {
 
     // Cria a pergunta no HTML
     divPerguntasdoQuizzSelecionado.innerHTML += `
-    <div class="pergunta" data-identifier="question">
-        <h3><span>${titulo}</span></h3>
+    <div class="pergunta">
+        <h3 data-identifier="question"><span>${titulo}</span></h3>
         <ul class="respostas">
         </ul>
     </div>
@@ -223,7 +223,7 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
     // scroll para a proxima pergunta
     if (proximaPergunta != null) {
         setTimeout(() => {
-            proximaPergunta.querySelector('h3').scrollIntoView();
+            proximaPergunta.querySelector('h3').scrollIntoView({block: "center", inline:"center"});
         }, 2000);
     }
     else {
@@ -282,7 +282,7 @@ function renderizarResultadoDoQuizz() {
     `;
 
     divCompilado.classList.remove("escondido");
-    divCompilado.querySelector('h3').scrollIntoView();
+    divCompilado.querySelector('h3').scrollIntoView({block: "end"});;
     divBotoesFimQuizz.classList.remove("escondido");
 }
 
