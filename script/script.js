@@ -217,32 +217,30 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
 
         // Altera a cor das respostas
         alterarCorDasRespostas(respostasDoQuizz[indicePergunta], liTodasAsRespostas);
-    }
 
+        // scroll para a proxima pergunta
+        if (proximaPergunta != null) {
+            setTimeout(() => {
+                proximaPergunta.querySelector('h3').scrollIntoView({ block: "center", inline: "center" });
+            }, 2000);
+        }
+        else {
+            console.log("Não há mais perguntas!!");
+        }
 
-    // scroll para a proxima pergunta
-    if (proximaPergunta != null) {
-        setTimeout(() => {
-            proximaPergunta.querySelector('h3').scrollIntoView({block: "center", inline:"center"});
-        }, 2000);
-    }
-    else {
-        console.log("Não há mais perguntas!!");
-    }
+        // Avalia se o resultado é correto ou não
+        const respostaSelecionada = respostasDoQuizz[indicePergunta][indiceResposta];
+        if (respostaSelecionada.isCorrectAnswer) {
+            numeroDeAcertos++;
+        }
 
-    // Avalia se o resultado é correto ou não
-    const respostaSelecionada = respostasDoQuizz[indicePergunta][indiceResposta];
-    if (respostaSelecionada.isCorrectAnswer) {
-        numeroDeAcertos++;
+        // Calcula e renderiza o resultado final caso seja a última pergunta.
+        if (isUltimaPergunta(indicePergunta)) {
+            console.log("É a última pergunta!!");
+            resultadoFinal = Math.round((numeroDeAcertos / numeroDePerguntas) * 100);
+            setTimeout(renderizarResultadoDoQuizz, 2000);
+        }
     }
-
-    // Calcula e renderiza o resultado final caso seja a última pergunta.
-    if (isUltimaPergunta(indicePergunta)) {
-        console.log("É a última pergunta!!");
-        resultadoFinal = Math.round((numeroDeAcertos / numeroDePerguntas) * 100);
-        setTimeout(renderizarResultadoDoQuizz, 2000);
-    }
-
 }
 
 // Adiciona as resposta não escolhida uma opacidade menor (classe respota-nao-escolhida)
@@ -282,8 +280,6 @@ function renderizarResultadoDoQuizz() {
     `;
 
     divCompilado.classList.remove("escondido");
-    //divCompilado.querySelector('h3').scrollIntoView({block: "end"});;
-
     divBotoesFimQuizz.classList.remove("escondido");
     divBotoesFimQuizz.scrollIntoView();
 }
