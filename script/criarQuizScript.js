@@ -232,16 +232,15 @@ function configurarButtonProsseguirParaNiveis(button) {
     button.addEventListener("click", () => {
         const listaURLRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".url-resposta-incorreta");
         const listaTextoRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".resposta-incorreta");
-
+        
         const listaCorPerguntas = formCriacaoPerguntas.querySelectorAll(".cor-fundo");
         for (cor of listaCorPerguntas) {
-            if (cor.checkValidity()){
+            if (cor.validity.patternMismatch){
                 cor.setCustomValidity("Preencha com uma cor hexadecimal com 6 digitos (Ex: #abc498)");
             } else {
                 cor.setCustomValidity("");
             }
         }
-
         for (let i = 0; i < listaURLRespostasIncorretas.length; i++) {
             if (listaURLRespostasIncorretas[i].value) {
                 listaTextoRespostasIncorretas[i].setAttribute("required", "");
