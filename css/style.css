@@ -237,9 +237,6 @@ li .cover {
     margin: 0 4%;
 }
 
-/*.pergunta {
-    width: 340px;
-}*/
 
 .respostas {
     display: flex;
@@ -677,11 +674,14 @@ input:focus {
         height: 99px;
         font-size: 23px;
         line-height: 27px;
+
+        overflow: hidden;
     }
 
     .mensagem {
         width: 690px;
         display: flex;
+        overflow: hidden;
     }
 
     .mensagem img {

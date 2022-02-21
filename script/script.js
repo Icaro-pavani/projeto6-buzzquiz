@@ -22,7 +22,6 @@ let usuarioTemQuizz = false;
 
 /* --- Conjunto de Funções --- */
 
-// Obtem todos os Quizzes que estão na API
 function obterTodosOsQuizzes() {
 
     obterIdMeusQuizzes();
@@ -45,13 +44,11 @@ function obterTodosOsQuizzes() {
 }
 
 
-// Obtem os Id dos Quizzes presentes no localStorage
 function obterIdMeusQuizzes() {
     idMeusQuizzes = meusQuizzes.map(quizz => quizz.id);
 }
 
 
-// Renderiza um quizz na tela inicial
 function renderizarQuizz(quizz) {
     const id = quizz.id;
     const title = quizz.title;
@@ -71,15 +68,13 @@ function renderizarQuizz(quizz) {
             mostrarSeusQuizzes();
             usuarioTemQuizz = true;
         }
-
-
     }
     else {
         ulTodosQuizzes.innerHTML += ulInnerHTML;
     }
 }
 
-// Mostra a seção seus quizzes e esconde a seção criar-quiz
+
 function mostrarSeusQuizzes() {
     ulSeusQuizzes.classList.remove("escondido");
     document.querySelector(".topo-seus-quizes").classList.remove("escondido");
@@ -93,7 +88,6 @@ function mostrarCriarQuizz() {
 }
 
 
-// Função chamada quando o usuário clica em quizz na tela inicial
 function jogarQuizz(id) {
     quizzID = id;
     toggleTelaLoading();
@@ -109,20 +103,20 @@ function jogarQuizz(id) {
     promise.catch((error) => { console(error.response) })
 }
 
-// Esconde os elementos da tela inicial do site
+
 function esconderElementosDaTelaInicial() {
     const telaInicial = document.querySelector("main");
     telaInicial.classList.add("escondido");
     document.querySelector(".fim-criacao").classList.add("escondido");
 }
 
-// Mostra a tela em que o quizz escolhido é carregado
+
 function mostrarTelaDoQuizz() {
     const telaQuizz = document.querySelector(".corpo-quizz");
     telaQuizz.classList.remove("escondido");
 }
 
-// Carrega o quizz na tela após usuário decidir jogá-lo
+
 function carregarQuizz(quizz) {
 
     const titulo = quizz.title;
@@ -141,7 +135,7 @@ function carregarQuizz(quizz) {
 
 }
 
-// Carrega o Título e a Imagem principal do Quizz
+
 function carregarTituloDoQuizz(titulo, imagem) {
     const quizzTitulo = document.querySelector(".quiz-titulo");
     quizzTitulo.innerHTML = `
@@ -151,8 +145,7 @@ function carregarTituloDoQuizz(titulo, imagem) {
     `
 }
 
-// Carrega cada questão do quizz na tela
-// É responsável por compôr todo o HTML de cada questão
+
 function carregarQuestao(questao) {
 
     const titulo = questao.title;
@@ -162,7 +155,7 @@ function carregarQuestao(questao) {
     // Embaralha as respostas
     respostas.sort(comparador);
 
-    // Adiciona a respota a variável global
+    
     respostasDoQuizz.push(respostas);
 
     // Cria a pergunta no HTML
@@ -177,11 +170,11 @@ function carregarQuestao(questao) {
     // Recupera a ultima pergunta adicionada
     const ultimaPergunta = divPerguntasdoQuizzSelecionado.querySelector(".pergunta:last-child");
 
-    // Recupera o h3 da ultima pergunta adicionada e altera a sua cor
+    
     const h3TituloPergunta = ultimaPergunta.querySelector("h3");
     h3TituloPergunta.style.backgroundColor = cor;
 
-    // Recupera a lista ul da ultima pergunta adicionada
+    
     const ultimaListaDeQuestoes = ultimaPergunta.querySelector("ul");
 
     // Adicionada cada alternativa da pergunta
@@ -198,30 +191,28 @@ function carregarQuestao(questao) {
             `
     }
 
-    // Incrementa o número de respostas carregadas
+    
     indicePergunta += 1;
 }
 
-// Define o comportamento da seleção de uma resposta
+
 function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta) {
     const ulRespostas = liRespostaEscolhida.parentNode;
     const liTodasAsRespostas = [...ulRespostas.querySelectorAll("li")];
     const divPergunta = ulRespostas.parentNode;
     const proximaPergunta = divPergunta.nextElementSibling;
 
-    // Verifica se a pergunta já foi respondida
+    
     if (!divPergunta.classList.contains("pergunta-respondida") && perguntaAnteriorFoiRespondida(indicePergunta)) {
 
         numeroDeRespostasDadas++;
 
         divPergunta.classList.add("pergunta-respondida");
-        // Marca a resposta escolhida
         liRespostaEscolhida.classList.add("resposta-escolhida");
 
         // Para cada resposta verifica se é a escolhida
         liTodasAsRespostas.forEach(verificarRespostaEscolhida);
 
-        // Altera a cor das respostas
         alterarCorDasRespostas(respostasDoQuizz[indicePergunta], liTodasAsRespostas);
 
         // scroll para a proxima pergunta
@@ -231,7 +222,6 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
             }, 2000);
         }
 
-        // Avalia se o resultado é correto ou não
         const respostaSelecionada = respostasDoQuizz[indicePergunta][indiceResposta];
         if (respostaSelecionada.isCorrectAnswer) {
             numeroDeAcertos++;
@@ -244,9 +234,6 @@ function selecionarResposta(liRespostaEscolhida, indicePergunta, indiceResposta)
             setTimeout(renderizarResultadoDoQuizz, 2000);
         }
     }
-    else {
-        console.log("Não foi possível selecionar a pergunta!");
-    }
 }
 
 function perguntaAnteriorFoiRespondida(indicePergunta) {
@@ -258,7 +245,7 @@ function perguntaAnteriorFoiRespondida(indicePergunta) {
     return false;
 }
 
-// Adiciona as resposta não escolhida uma opacidade menor (classe respota-nao-escolhida)
+
 function verificarRespostaEscolhida(liResposta) {
     if (!liResposta.classList.contains("resposta-escolhida")) {
         liResposta.classList.add("resposta-nao-escolhida");
@@ -282,7 +269,7 @@ function alterarCorDasRespostas(respostas, liRespostas) {
     }
 }
 
-// Renderiza o HTML do resultado do quizz
+
 function renderizarResultadoDoQuizz() {
     const level = levelFinal();
 
@@ -299,7 +286,7 @@ function renderizarResultadoDoQuizz() {
     divBotoesFimQuizz.scrollIntoView();
 }
 
-// Retornal o level final obtido pelo usuário
+
 function levelFinal() {
     let indiceMaiorLevel = 0;
     let maoirPorcentagem = 0;
@@ -318,7 +305,7 @@ function levelFinal() {
 
 }
 
-// Avalia se é a ultima pergunta do quizz
+
 function isUltimaPergunta() {
     if (numeroDeRespostasDadas === numeroDePerguntas) {
         return true;
@@ -327,7 +314,7 @@ function isUltimaPergunta() {
     return false;
 }
 
-// Função que reinicia o quizz
+
 function reiniciarQuizz() {
     divCompilado.classList.add("escondido");
     divBotoesFimQuizz.classList.add("escondido");
@@ -336,7 +323,7 @@ function reiniciarQuizz() {
     resetarVariaveis();
 }
 
-// Reseta todas as variáveis referentes ao cálculo dos resultados
+
 function resetarVariaveis() {
     respostasDoQuizz = [];
     indicePergunta = 0;
@@ -346,6 +333,7 @@ function resetarVariaveis() {
     resultadoFinal = 0;
     numeroDeRespostasDadas = 0;
 }
+
 /* --- Funções Auxiliares --- */
 // Comparador: gera um número randômico entre -0.5 e 0.5
 function comparador() {
