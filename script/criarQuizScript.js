@@ -235,7 +235,11 @@ function configurarButtonProsseguirParaNiveis(button) {
 
         const listaCorPerguntas = formCriacaoPerguntas.querySelectorAll(".cor-fundo");
         for (cor of listaCorPerguntas) {
-            cor.setCustomValidity("Preencha com uma cor hexadecimal com 6 digitos (Ex: #abc498)");
+            if (cor.checkValidity()){
+                cor.setCustomValidity("Preencha com uma cor hexadecimal com 6 digitos (Ex: #abc498)");
+            } else {
+                cor.setCustomValidity("");
+            }
         }
 
         for (let i = 0; i < listaURLRespostasIncorretas.length; i++) {
