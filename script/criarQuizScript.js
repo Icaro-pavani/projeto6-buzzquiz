@@ -232,6 +232,11 @@ function configurarButtonProsseguirParaNiveis(button) {
         const listaURLRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".url-resposta-incorreta");
         const listaTextoRespostasIncorretas = formCriacaoPerguntas.querySelectorAll(".resposta-incorreta");
 
+        const listaCorPerguntas = formCriacaoPerguntas.querySelectorAll(".cor-fundo");
+        for (cor of listaCorPerguntas) {
+            cor.setCustomValidity("Preencha com uma cor hexadecimal com 6 digitos (Ex: #abc498)");
+        }
+
         for (let i = 0; i < listaURLRespostasIncorretas.length; i++) {
             if (listaURLRespostasIncorretas[i].value) {
                 listaTextoRespostasIncorretas[i].setAttribute("required", "");
