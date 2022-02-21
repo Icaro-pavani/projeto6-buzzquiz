@@ -69,8 +69,8 @@ function renderizarQuizz(quizz) {
             <div class="cover"></div>
             <p>${title}</p>
             <div class="opcao-quizz">
-                <img src="imagens/edit.svg" onclick="deletarQuizz(${id})">
-                <img src="imagens/trash.svg" onclick="editarQuizz(${id})">
+                <img src="imagens/edit.svg" onclick="event.stopPropagation(); editarQuizz(${id});">
+                <img src="imagens/trash.svg" onclick="event.stopPropagation(); deletarQuizz(${id});">
             </div>
         </li> `;
 
