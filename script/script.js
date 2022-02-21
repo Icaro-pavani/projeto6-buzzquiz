@@ -282,8 +282,10 @@ function renderizarResultadoDoQuizz() {
     `;
 
     divCompilado.classList.remove("escondido");
-    divCompilado.querySelector('h3').scrollIntoView({block: "end"});;
+    //divCompilado.querySelector('h3').scrollIntoView({block: "end"});;
+
     divBotoesFimQuizz.classList.remove("escondido");
+    divBotoesFimQuizz.scrollIntoView();
 }
 
 // Retornal o level final obtido pelo usuário
